@@ -6,39 +6,17 @@ class data extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future openDialog() => showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Title"),
-              content: Text("Content"),
-            );
-          },
-        );
-
     return Padding(
-      padding: const EdgeInsets.only(top: 40, left: 35),
+      padding: const EdgeInsets.only(top: 45, left: 40),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "totale balance",
-              style: TextStyle(
-                  fontFamily: 'Lexend', fontSize: 13, color: Colors.white),
-            ),
-            IconButton(
-                onPressed: () => openDialog(),
-                icon: Icon(
-                  Icons.notifications,
-                  size: 20,
-                  color: Colors.white,
-                ))
-          ],
+        Text(
+          "totale balance",
+          style: TextStyle(
+              fontFamily: 'Lexend', fontSize: 13, color: Colors.white),
         ),
         Text(montant,
             style: TextStyle(
-                height: 0.7,
+                height: 1,
                 fontFamily: 'Lexend',
                 fontSize: 48,
                 color: Colors.white,
@@ -46,6 +24,24 @@ class data extends StatelessWidget {
         Text("20%",
             style: TextStyle(
                 fontFamily: 'Lexend', fontSize: 10, color: Colors.white)),
+        SizedBox(
+          width: 290,
+          child: Divider(
+            thickness: 1,
+            color: Colors.white,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("data"),
+              Text("data"),
+              Text("data"),
+            ],
+          ),
+        )
       ]),
     );
   }

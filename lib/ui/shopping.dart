@@ -36,7 +36,20 @@ class _shoppingState extends State<shopping> {
         children: [
           searchbar(),
           SizedBox(
-            height: 100,
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                  onPressed: null,
+                  icon: Icon(
+                    Icons.factory,
+                    color: Colors.blue,
+                  )),
+              IconButton(onPressed: null, icon: Icon(Icons.factory)),
+              IconButton(onPressed: null, icon: Icon(Icons.factory))
+            ],
           ),
           mybutton(
             Ontap: (() => _produitbloc.add(Produitloadingevent())),

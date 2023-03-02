@@ -68,6 +68,11 @@ final icon = [
   const basket(),
   const notification(),
 ];
+final color = [
+  Colors.white,
+  Colors.blue,
+  Colors.white,
+];
 int _currentIndex = 0;
 int i = 0;
 
@@ -98,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
-          color: Color.fromRGBO(32, 150, 255, 1),
+          color: Color.fromRGBO(0, 102, 255, 1),
           backgroundColor: Colors.transparent,
           height: 49,
           // currentIndex: _currentIndex,
@@ -129,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () => _scaffoldKey.currentState?.openDrawer(),
               icon: Icon(
                 Icons.menu,
-                color: Colors.white,
+                color: color[i],
               ),
               iconSize: 30,
             ),
