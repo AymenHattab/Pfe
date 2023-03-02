@@ -10,7 +10,7 @@ class data extends StatelessWidget {
       padding: const EdgeInsets.only(top: 45, left: 40),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          "totale balance",
+          "solde total",
           style: TextStyle(
               fontFamily: 'Lexend', fontSize: 13, color: Colors.white),
         ),
@@ -21,7 +21,7 @@ class data extends StatelessWidget {
                 fontSize: 48,
                 color: Colors.white,
                 fontWeight: FontWeight.bold)),
-        Text("20%",
+        Text("0%",
             style: TextStyle(
                 fontFamily: 'Lexend', fontSize: 10, color: Colors.white)),
         SizedBox(
@@ -31,17 +31,6 @@ class data extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("data"),
-              Text("data"),
-              Text("data"),
-            ],
-          ),
-        )
       ]),
     );
   }

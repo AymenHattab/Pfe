@@ -77,7 +77,7 @@ class _mainpageState extends State<mainpage> {
                       top: -30,
                       left: MediaQuery.of(context).size.width - 80,
                       child: circle()),
-                  data(montant: textFromServer!),
+                  data(montant: "0"),
                 ]),
                 height: 177,
                 width: MediaQuery.of(context).size.width,

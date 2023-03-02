@@ -1,82 +1,167 @@
+import 'package:app/bloc/BasketBloc/BasketBloc.dart';
+import 'package:app/component/particles/circle.dart';
+import 'package:app/main.dart';
+import 'package:app/ui/shopping.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class containerproduct extends StatelessWidget {
+import '../bloc/BasketBloc/BasketEvent.dart';
+import '../model/PanierModel.dart';
+import '../ui/Basket.dart';
+import '../ui/apitest.dart';
+
+class containerproduct extends StatefulWidget {
+  Function(List<panier>) onAddToCart;
   String Titre;
-  containerproduct({Key? key, required this.Titre}) : super(key: key);
+  containerproduct({Key? key, required this.Titre, required this.onAddToCart})
+      : super(key: key);
+  @override
+  State<containerproduct> createState() => _containerproductState();
+}
+
+class _containerproductState extends State<containerproduct> {
+
+  BaskecontenttBloc addcontent = BaskecontenttBloc();
+  BasketBloc Numbercontent = BasketBloc();
+  @override
+  void initState() {
+
+    addcontent = BlocProvider.of<BaskecontenttBloc>(context);
+    Numbercontent = BlocProvider.of<BasketBloc>(context);
+    
+    super.initState();
+  }
+
+ 
+  int Number = 1;
+  Basket p = Basket();
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: <Widget>[
-        Container(
-            height: 120,
-            width: 170,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.0),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [1, 0.6],
-                colors: [Titre.toColor(), Titre.toColor()],
+    return Stack(children: <Widget>[
+      Container(
+        child: Stack(
+          clipBehavior: Clip.hardEdge,
+          children: <Widget>[
+            Positioned(
+              top: 10,
+              child: Container(
+                height: 150,
+                width: 180,
+                decoration: BoxDecoration(
+                    color: widget.Titre.toColor(),
+                    borderRadius: BorderRadius.circular(12)),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        Titre,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Lexend',
-                            fontSize: 12),
-                      ),
-                      Text(
-                        "aaaaAAAA",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Lexend',
-                          fontSize: 5,
-                        ),
-                      ),
-                      Spacer(),
-                      Container(
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                        height: 23,
-                        width: 29,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(11.5),
-                            ),
-                            color: Titre.toColor()),
-                      ),
-                    ],
+            Positioned(left: 70, child: circle()),
+            Positioned(left: -40, top: 150, child: circle()),
+            Positioned(
+              top: -30,
+              left: -95,
+              child: Image(
+                  width: 500,
+                  image: AssetImage(
+                    "images/pr1.png",
+                  )),
+            ),
+            Positioned(
+              left: -10,
+              top: -10,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: widget.Titre.toColor(),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(100),
+                        topRight: Radius.circular(100))),
+                height: 50,
+                width: 50,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: IconButton(
+                    icon: Icon(
+                      size: 20,
+                      Icons.add_shopping_cart_sharp,
+                      color: Colors.white,
+                    ),
+                    
+                    onPressed: (() {
+                     
+                      addcontent.add(AddListToBasket(panier("images/pr1.png", "nom", Number, "type")));
+                      Numbercontent.add(NumberOfBasket());
+                    }),
                   ),
-                ],
-              ),
-            )),
-        Positioned(
-          left: -15,
-          top: -10,
-          child: Container(
-            height: 150,
-            child: Image(
-              image: AssetImage(
-                'images/pr1.png',
+                ),
               ),
             ),
-          ),
+          ],
         ),
-      ],
-    );
+        height: 160,
+        width: 180,
+        decoration: BoxDecoration(color: Color.fromARGB(0, 33, 149, 243)),
+      ),
+      Positioned(
+        top: 30,
+        left: 10,
+        child: Container(
+          // ignore: sort_child_properties_last
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "nom",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: "lexend",
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              Text(
+                "description et le prix",
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: "lexend",
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 65),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.remove, color: Colors.white),
+                      onPressed: () => setState(() {
+                        if (Number != 1) {
+                          Number--;
+                        }
+                      }),
+                    ),
+                    Text(
+                      "$Number",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      onPressed: (() {
+                        setState(() {
+                          Number++;
+                        });
+                      }),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+          height: 160,
+          width: 180,
+          decoration: BoxDecoration(color: Color.fromARGB(0, 244, 67, 54)),
+        ),
+      ),
+    ]);
   }
 }
 

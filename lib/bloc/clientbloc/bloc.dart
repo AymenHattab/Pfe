@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class clientbloc extends Bloc<clientEvents, clientState> {
-  clientbloc() : super(clientloading()) {
+  clientbloc(clientEvents events) : super(clientloading()) {
     final ApiProvider _p = ApiProvider();
     // @override
     // Stream<clientState> mapEventToState(clientEvents event) async* {
@@ -44,6 +44,12 @@ class clientbloc extends Bloc<clientEvents, clientState> {
       } on clientloadedevent {
         emit(clienterror());
       }
+    });
+    on<clientbuttonNotifcationsPressed>((event, emit) async {
+      var prefs = await SharedPreferences.getInstance();
+      final test = await _p.notification();
+      print(test);
+      emit(clientNotifcationloaded(test));
     });
   }
 }

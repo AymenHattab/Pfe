@@ -23,7 +23,7 @@ class searchbar extends StatelessWidget {
               Icons.search,
               color: Color.fromRGBO(0, 85, 211, 1),
             ),
-            labelText: "cherecher un produit ",
+            labelText: "rechercher un produit ",
             labelStyle: TextStyle(
                 fontWeight: FontWeight.w200,
                 fontSize: 12,

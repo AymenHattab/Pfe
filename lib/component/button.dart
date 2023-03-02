@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class mybutton extends StatelessWidget {
   final Function()? Ontap;
+  final _formKey = GlobalKey<FormState>();
   final String text;
-  const mybutton({super.key, required this.Ontap, required this.text});
+  mybutton({super.key, required this.Ontap, required this.text, required});
 
   @override
   Widget build(BuildContext context) {

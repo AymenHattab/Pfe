@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/component/Objectifs.dart';
+import 'package:app/component/historique.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +26,7 @@ class profile extends StatelessWidget {
                     fontFamily: "Lexend",
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white))
+                    color: Colors.white)),
           ]),
           height: 230,
           width: MediaQuery.of(context).size.width,
@@ -35,32 +37,34 @@ class profile extends StatelessWidget {
                 bottomRight: const Radius.circular(89.0),
               )),
         ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          "les Objectif actuelle ",
-          style: TextStyle(
-              color: Color.fromRGBO(0, 102, 255, 1),
-              fontSize: 20,
-              fontFamily: 'Lexend',
-              fontWeight: FontWeight.bold),
-        ),
-        Expanded(
-          child: ListView(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 50,
-                color: Colors.amber[600],
-                child: const Center(child: Text('Entry A')),
+              Text(
+                "Objectif",
+                style: TextStyle(
+                    color: Colors.blue, fontFamily: "Lexend", fontSize: 13),
               ),
-              Container(
-                height: 50,
-                color: Colors.amber[600],
-                child: const Center(child: Text('Entry A')),
+              Text(
+                "Historique",
+                style: TextStyle(
+                    color: Colors.blue, fontFamily: "Lexend", fontSize: 13),
+              ),
+              Text(
+                "Statistiue",
+                style: TextStyle(
+                    color: Colors.blue, fontFamily: "Lexend", fontSize: 13),
               ),
             ],
           ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Expanded(
+          child: PageView(children: [Objectif(), historique()]),
         )
       ],
     );

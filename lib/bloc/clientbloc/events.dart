@@ -1,3 +1,4 @@
+import 'package:app/model/modelTest.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -17,3 +18,5 @@ class clientbuttonPressed extends clientEvents {
   final String psw;
   clientbuttonPressed(this.email, this.psw);
 }
+
+class clientbuttonNotifcationsPressed extends clientEvents {}
