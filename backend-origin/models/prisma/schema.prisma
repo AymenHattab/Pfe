@@ -1,0 +1,166 @@
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["groupBy"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:@localhost:3306/hgedb01"
+}
+
+model Admin {
+  UserName String @id 
+  Password String 
+  image String?
+}
+
+model commercant {
+  id Int  @id @default(autoincrement())
+  Nom String 
+  prenom String
+  email String @unique
+  phone String 
+  mdp String 
+  Adress String 
+  image String?  @default("https://th.bing.com/th/id/OIP.DcifgGr8xOF70qzHb0tmqQAAAA?pid=ImgDet&rs=1")
+  benificier Int? @default(10)
+  Paye Boolean @default(false)
+  montant_actuelle Float? @default(0)
+  isActive Boolean @default(true)
+  historique historique[]
+  score Com_objective[]
+  commande commande[]
+  client client[]
+}
+
+model historique{
+  id Int @default(autoincrement()) @id
+  Date DateTime  @default(now())
+  montant Float
+  ComId Int?
+  commercant commercant? @relation(fields: [ComId],references: [id])
+}
+
+model objectif{
+  id Int @default(autoincrement()) @id 
+  Titel String 
+  Description String
+  nbr_defi Int
+  score Com_objective[]
+}
+
+model Com_objective{
+  Idobj Int @unique
+  objective objectif @relation(fields: [Idobj],references: [id])
+   ComId Int @unique
+  commercant commercant @relation(fields: [ComId],references: [id])
+  Score Int 
+  isAchived Boolean
+  @@id([Idobj,ComId])
+}
+
+model commande{
+  id Int @id
+  Date_cmd String
+  etat String @default("Confirmer")
+  lat Float
+  long Float
+  ispayed Boolean @default(false)
+  ComId Int ?
+  idCard Int @unique
+  Card Card? @relation(fields: [idCard],references: [id])
+  commercant commercant? @relation(fields: [ComId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+  CliId Int?
+  Client client? @relation(fields: [CliId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+  idliv Int?
+  livreur livreur? @relation(fields: [idliv],references: [id],onDelete: Cascade,onUpdate: Cascade)
+  facture facture?
+  
+}
+
+model facture{
+  id Int @default(autoincrement()) @id
+  date DateTime @default(now())
+  montant Float
+  code_cmd Int @unique
+  commande commande @relation(fields: [code_cmd],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+}
+model CardItem{
+  id Int @default(autoincrement()) @id
+  idProduit Int
+  qte_produit Int
+  Prix Float
+  Produit produit @relation(fields: [idProduit],references: [id],onDelete: Cascade,onUpdate: Cascade)
+  idCard Int
+  Card Card @relation(fields: [idCard],references: [id],onDelete: Cascade,onUpdate: Cascade)
+}
+model Card{
+  id Int  @id
+  cardItem CardItem[]
+  commande commande?
+}
+
+model produit{
+  id Int @default(autoincrement()) @id
+  nom String
+  description String
+  prix Float
+  color String
+  image String
+  pht Float 
+  pat Float
+  remise Int?
+  idcategory Int 
+  category Category @relation(fields: [idcategory],references: [id],onDelete: Cascade,onUpdate: Cascade)
+  CardItem CardItem[]
+}
+
+model Category{
+  id Int @default(autoincrement()) @id
+  category String 
+  produit produit[]
+}
+
+model client {
+  id Int  @id
+  nom String
+  prenom String 
+  phone String
+  commande commande []
+  Rapport Rapport[]
+  idCom Int
+  commercant commercant? @relation(fields: [idCom],references: [id],onDelete:Cascade,onUpdate: Cascade)
+  client CompteClient?
+}
+model CompteClient{
+  id Int @default(autoincrement()) @id
+  email String @unique
+  image String? @default("")
+  mdp String 
+  CliId Int? @unique
+  Client client? @relation(fields: [CliId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+
+}
+model livreur {
+  id Int @default(autoincrement())@id 
+  nomliv String
+  prenomliv String 
+  email String @unique
+  phone String
+  adress String
+  image String? @default("")
+  mdp String 
+  isdispo Boolean @default(true)
+  commande commande  []
+}
+
+model Rapport{
+  id Int @default(autoincrement()) @id
+  Content String 
+  Date DateTime @default(now())
+  CliId Int?
+  Client client? @relation(fields: [CliId],references: [id],onDelete: Cascade,onUpdate: Cascade)
+  
+}
