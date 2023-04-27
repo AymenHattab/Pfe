@@ -11,12 +11,13 @@ import '../ui/apitest.dart';
 
 class containerproduct extends StatefulWidget {
   Function(List<panier>) onAddToCart;
+  int idProduct ; 
   String Titre;
   String color;
   String image ; 
   int prize ; 
   
-  containerproduct({Key? key, required this.Titre,required this.image,required this.prize,required this.color, required this.onAddToCart})
+  containerproduct({Key? key,required this.idProduct, required this.Titre,required this.image,required this.prize,required this.color, required this.onAddToCart})
       : super(key: key);
   @override
   State<containerproduct> createState() => _containerproductState();
@@ -88,8 +89,7 @@ class _containerproductState extends State<containerproduct> {
                     ),
                     
                     onPressed: (() {
-
-                      addcontent.add(AddListToBasket(panier("images/pr1.png", "nom", Number, "type")));
+                      addcontent.add(AddListToBasket(panier("images/pr1.png", widget.Titre, Number, "type",widget.idProduct,widget.prize)));
                       Numbercontent.add(NumberOfBasket());
                     }),
                   ),

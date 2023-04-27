@@ -10,7 +10,6 @@ import 'dart:convert';
 import '../model/modelTest.dart';
 import '../resources/Apicommercant.dart';
 
-
 class PullToViewPage extends StatefulWidget {
   const PullToViewPage({Key? key}) : super(key: key);
 

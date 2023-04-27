@@ -144,6 +144,7 @@ Facturedraggable draggable = Facturedraggable();
                       itemBuilder: (BuildContext context, int index) {
                         return Center(
                           child: containerproduct(
+                            idProduct  : state.pr[index].produit![index].id!,
                               image: state.pr[index].produit![index].image!,
                               prize: state.pr[index].produit![index].prix!,
                               color: state.pr[index].produit![index].color!,

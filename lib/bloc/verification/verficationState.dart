@@ -9,7 +9,6 @@ class verificationState extends Equatable {
 class test extends verificationState {}
 
 class EmailState extends verificationState {
-  
   Widget email;
   Widget nom;
   EmailState(this.email, this.nom);

@@ -8,6 +8,7 @@ import '../bloc/clientbloc/bloc.dart';
 import '../bloc/clientbloc/events.dart';
 import 'button.dart';
 
+
 class addClient extends StatefulWidget {
   const addClient({super.key});
 
@@ -16,6 +17,9 @@ class addClient extends StatefulWidget {
 }
 
 class _addClientState extends State<addClient> {
+
+
+
   final nom = TextEditingController();
   final prenom = TextEditingController();
   final number = TextEditingController();
@@ -24,11 +28,14 @@ class _addClientState extends State<addClient> {
     bloc = BlocProvider.of<clientbloc>(context);
 
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+ 
+
         ClipRRect(
           child: Container(
             height: 70.0,

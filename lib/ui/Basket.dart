@@ -24,14 +24,14 @@ class Basket extends StatefulWidget {
 }
 
 BaskecontenttBloc showcontent = BaskecontenttBloc();
-BasketBloc Numbercontent = BasketBloc();
+BaskecontenttBloc Numbercontent = BaskecontenttBloc();
 Facturedraggable draggable = Facturedraggable();
 
 @override
 class _BasketState extends State<Basket> {
   void initState() {
     draggable = BlocProvider.of<Facturedraggable>(context);
-    Numbercontent = BlocProvider.of<BasketBloc>(context);
+    Numbercontent = BlocProvider.of<BaskecontenttBloc>(context);
     super.initState();
   }
 
@@ -145,7 +145,8 @@ class _BasketState extends State<Basket> {
                       ],
                     ),
                     onPressed: () {
-                      Numbercontent.add(DeleteBasket());
+                      print("on pressed button");
+                      Numbercontent.add(Passcommand(12.3,55.3,2));
                     },
                   ),
                 ],

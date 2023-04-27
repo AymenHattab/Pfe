@@ -8,8 +8,7 @@ import '../../model/Produit.dart';
 import '../../model/category.dart';
 
     final produitApi _p = produitApi();
-
-class Produitbloc extends Bloc<ProduitEvents, ProduitState> {
+class Produitbloc extends Bloc<ProduitEvents,ProduitState> {
     Produitbloc(ProduitEvents events) : super(ProduitLoading()) {
     on<Produitloadingevent>(((event, emit) async {
       try {
