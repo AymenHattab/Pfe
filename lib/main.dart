@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         initialRoute: '/signupAndLogin',
         routes: {
-          "/facture": (context) => facture(),
+          "/facture": (context) => facture(lat: 0.0,long: 0.0),
           "/signupAndLogin": (context) => signupAndLogin(),
           "/login": (context) => login(),
           "/mainpage": (context) => mainpage(),
@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
           "/profile": (context) => profile(),
           "/apitest": (context) => PullToViewPage(),
           "/test": (context) => MyHomePagetest(),
-          "/basket": (context) => Basket(state : false),
+          "/basket": (context) => Basket(state : false , lat: 0.0,long: 0.0,),
           "/main": (context) => MyApp(),
           "/mainview": (context) => mainview(),
         },
@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
 
 final tabs = [
   const mainpage(),
-  shopping(),
+  // shopping(),
   const profile(),
 ];
 
@@ -117,7 +117,7 @@ final icon = [
             return Container();
           },
         )),
-    const basket()
+    // const basket()
   ]),
   const notification(),
 ];

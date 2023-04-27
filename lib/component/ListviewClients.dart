@@ -10,12 +10,13 @@ import '../bloc/clientbloc/states.dart';
 import '../ui/clientMangement.dart';
 
 class ListViewClient extends StatefulWidget {
-  const ListViewClient({super.key});
+  final PageController controller ;
+
+   ListViewClient({required this.controller , super.key});
 
   @override
   State<ListViewClient> createState() => _MyWidgetState();
 }
-
 class _MyWidgetState extends State<ListViewClient> {
   void initState() {
     clientbloc bloc = clientbloc(clientbuttonNotifcationsPressed());
@@ -28,6 +29,7 @@ class _MyWidgetState extends State<ListViewClient> {
     return Container(
         child: Column(
       children: [
+      
         SizedBox(height: 10),
         Container(
           width: 200,
@@ -40,7 +42,17 @@ class _MyWidgetState extends State<ListViewClient> {
               color: Color.fromRGBO(0, 85, 211, 1),
             ),
           ),
+          
         ),
+            GestureDetector(
+            onTap: () {
+               widget.controller.nextPage(duration:Duration(seconds:1 ), curve: Curves.linear);
+            },
+            child: Row(mainAxisAlignment: MainAxisAlignment.end,children: [
+              Text("ajouter un client"),
+                  Icon(Icons.navigate_next)
+            ],),
+          ),
         SizedBox(
           height: 10,
         ),

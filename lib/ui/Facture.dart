@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/FactureBloc/FactureBloc.dart';
 
 class facture extends StatefulWidget {
-  const facture({super.key});
+   double lat ; 
+  double long ;
+   facture({super.key,required this.lat,required this.long});
 
   @override
   State<facture> createState() => _factureState();
@@ -40,20 +42,20 @@ class _factureState extends State<facture> {
           clipBehavior: Clip.none,
           children: [
             shopping(),
-           Align(alignment: Alignment(0, 1),child: BasketWidget(context, drag)),
+           Align(alignment: Alignment(0, 1),child: BasketWidget(context,drag,widget.lat,widget.long)),
            ],
         ),
       ),
     );
   }
 
-  Widget BasketWidget(BuildContext context, State) {
+  Widget BasketWidget(BuildContext context, State , double lat , double long ) {
     print(State);
     return Material(
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         height: State ? MediaQuery.of(context).size.height : 49,
-        child: Basket(state : State),
+        child: Basket(state : State , lat: lat ,long:long ),
       ),
     );
   }

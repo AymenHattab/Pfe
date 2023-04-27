@@ -29,6 +29,7 @@ class _clientsSidebarState extends State<clientsSidebar> {
     select = BlocProvider.of<clientselect>(context);
     super.initState();
   }
+  final PageController controller = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +41,10 @@ class _clientsSidebarState extends State<clientsSidebar> {
             height: 400,
             width: 200,
             decoration: BoxDecoration(color: Colors.grey[100]),
-            child: PageView(children: [
-              ListViewClient(),
+            child: PageView(
+              controller : controller , 
+              children: [
+              ListViewClient(controller: controller,),
               addClient()
             ]),
           ));

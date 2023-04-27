@@ -60,7 +60,6 @@ class _MyAppState extends State<mainview> {
 
 final tabs = [
   const mainpage(),
-  shopping(),
   const profile(),
 ];
 
@@ -81,7 +80,7 @@ final icon = [
             return Container();
           },
         )),
-    const basket()
+    // const basket()
   ]),
   const notification(),
 ];
@@ -137,8 +136,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 Icons.home,
                 color: Colors.white,
               ),
-              Icon(Icons.add_shopping_cart_sharp,
-                  color: Colors.white, semanticLabel: "azdza"),
+              // Icon(Icons.add_shopping_cart_sharp,
+              //     color: Colors.white, semanticLabel: "azdza"),
               SizedBox(height: 30,child: CM.Image)
             ],
           ),

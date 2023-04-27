@@ -78,9 +78,7 @@ Facturedraggable draggable = Facturedraggable();
                   hint: "recherche un produit",
                   icon: Icons.search,
                 ),
-                IconButton(onPressed:() {
-        
-        },  icon: Icon(Icons.shop,color: Colors.blue,))
+              
               ],
             ),
             SizedBox(

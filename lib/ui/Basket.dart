@@ -17,8 +17,10 @@ final List<panier> Panier = [];
 double somme = 0;
 
 class Basket extends StatefulWidget {
+  double lat ; 
+  double long ;
   bool state;
-  Basket({super.key, required this.state});
+  Basket({super.key, required this.state, required this.lat,required this.long });
   @override
   State<Basket> createState() => _BasketState();
 }
@@ -146,7 +148,7 @@ class _BasketState extends State<Basket> {
                     ),
                     onPressed: () {
                       print("on pressed button");
-                      Numbercontent.add(Passcommand(12.3,55.3,2));
+                      Numbercontent.add(Passcommand(widget.lat,widget.long,2));
                     },
                   ),
                 ],

@@ -34,8 +34,6 @@ class _addClientState extends State<addClient> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
- 
-
         ClipRRect(
           child: Container(
             height: 70.0,
@@ -84,7 +82,7 @@ class _addClientState extends State<addClient> {
             Ontap: ()=> {
               bloc.add(AddClient(nom.text,prenom.text,number.text))
             },
-            text: "Sign-up",
+            text: "Ajouter un client",
             size: ((MediaQuery.of(context).size.width / 1.75))),
       ],
     );

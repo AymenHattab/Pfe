@@ -104,11 +104,11 @@ void _livelocation(){
   Offset _offset = Offset.zero;
   @override
   Widget build(BuildContext context) {
-    Future openDialog() => showDialog(
+    Future openDialog(lat,long) => showDialog(
           context: context,
           builder: (BuildContext context) {
         insetPadding: EdgeInsets.all(20);
-           return facture();
+           return facture(lat: lat,long: long,);
     
           }
         );
@@ -122,8 +122,8 @@ void _livelocation(){
               zoom:13,
             ),
             onTap: (LatLng location){
-              print(location);
-                  openDialog();
+              print(" location == $location");
+                  openDialog(location.latitude,location.longitude);
               setState(() {
                 print(location);
               _markers.add(Marker(markerId: MarkerId(location.toString()), position : location ),
