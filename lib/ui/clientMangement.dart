@@ -45,7 +45,7 @@ class _clientsSidebarState extends State<clientsSidebar> {
               controller : controller , 
               children: [
               ListViewClient(controller: controller,),
-              addClient()
+              addClient(controller: controller)
             ]),
           ));
         });

@@ -17,8 +17,9 @@ class BasketcontentNumber extends BasketState {
 }
 class BasketcontentList extends BasketState {
   List<panier> ListPanier ;
-  BasketcontentList (this.ListPanier);
-  List<Object?> get props => [ListPanier];
+  int somme ; 
+  BasketcontentList (this.ListPanier,this.somme);
+  List<Object?> get props => [ListPanier,somme];
 }
 
 class BasketErromsg extends BasketState {

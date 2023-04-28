@@ -13,7 +13,9 @@ class NumberOfBasket extends BasketEvent {}
 
 class AddListToBasket extends BasketEvent {
   panier Panier;
-  AddListToBasket(this.Panier);
+  int somme ; 
+  AddListToBasket(this.Panier,this.somme);
+  List<Object?> get props => [Panier,somme];
 }
 
 class DeleteBasket extends BasketEvent {}

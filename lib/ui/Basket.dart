@@ -125,14 +125,24 @@ class _BasketState extends State<Basket> {
                         size: 40,
                         color: Colors.white,
                       ),
-                      Text(
-                        "242.3 DT",
+
+      BlocBuilder<BaskecontenttBloc, BasketState>(
+        builder: (context, state) {
+          if (state is BasketcontentList) {
+            return  Text(
+                        state.somme.toString(),
                         style: TextStyle(
                             fontSize: 30,
                             color: Color.fromRGBO(255, 255, 255, 1),
                             fontFamily: "Lexend"),
-                      ),
-                    ],
+                      );
+          }
+          return Container();
+          },
+
+
+                     
+                  )],
                   ),
                   IconButton(
                     icon: Icon(

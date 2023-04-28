@@ -89,7 +89,7 @@ class _containerproductState extends State<containerproduct> {
                     ),
                     
                     onPressed: (() {
-                      addcontent.add(AddListToBasket(panier("images/pr1.png", widget.Titre, Number, "type",widget.idProduct,widget.prize)));
+                      addcontent.add(AddListToBasket(panier("images/pr1.png", widget.Titre, Number, "type",widget.idProduct,widget.prize),widget.prize));
                       Numbercontent.add(NumberOfBasket());
                     }),
                   ),

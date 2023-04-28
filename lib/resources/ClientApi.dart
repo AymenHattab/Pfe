@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../model/modelTest.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,25 +26,21 @@ ApiClient {
     return posts;
   }
 
+    Random random = Random();
+  int RandomNumber() {
+    return random.nextInt(4000);
+  }
+
  AddClient(String Nom , String Prenom , String Number , int id ) async {
-
-//  Map Jsondata = {
-//             "nom": "aaaa",
-//             "prenom": "hattab",
-//             "phone": "456987",
-//             "idCom": '2'
-// };
-//   var body = json.encode(Jsondata);
-//  print(Jsondata); 
+int Random =random.nextInt(4000);
   var uri = "http://192.168.1.17:8000/api/client";
-
  final  response = await http.post(Uri.parse(uri),
       body: 
-      {
-            "nom": "aaaa",
-            "prenom": "hattab",
-            "phone": "456987",
-            "idCom": 1
+      {      "id" :Random.toString(),
+            "nom": Nom,
+            "prenom":Prenom,
+            "phone": Number,
+            "idCom": "1"
       }
       );
 print(response.statusCode); 

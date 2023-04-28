@@ -37,7 +37,7 @@ class produitApi {
       var id=panier[i].id.toString();
       print("id == $id ");
            await http
-        .post(uri2, body: {"idproduit":panier[i].id.toString(), "qte_produit":panier[i].qte.toString(), "Prix":panier[i].prix.toString(), "idcard":"978"});
+        .post(uri2, body: {"idproduit":panier[i].id.toString(), "qte_produit":panier[i].qte.toString(), "Prix":panier[i].prix.toString(), "idcard":randomnumber});
 
     }
 //     //add command 

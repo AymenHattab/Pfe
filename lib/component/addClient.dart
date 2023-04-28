@@ -10,7 +10,8 @@ import 'button.dart';
 
 
 class addClient extends StatefulWidget {
-  const addClient({super.key});
+  final PageController controller ;
+   addClient({required this.controller,super.key});
 
   @override
   State<addClient> createState() => _addClientState();
@@ -80,7 +81,9 @@ class _addClientState extends State<addClient> {
         ),
         mybutton(
             Ontap: ()=> {
-              bloc.add(AddClient(nom.text,prenom.text,number.text))
+              bloc.add(AddClient(nom.text,prenom.text,number.text)),
+              widget.controller.previousPage(duration:Duration(seconds:1 ), curve: Curves.linear),
+              bloc.add(clientbuttonNotifcationsPressed())
             },
             text: "Ajouter un client",
             size: ((MediaQuery.of(context).size.width / 1.75))),
