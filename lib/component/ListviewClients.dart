@@ -81,53 +81,59 @@ class _MyWidgetState extends State<ListViewClient> {
                                       offset: Offset(0, 3),
                                     )
                                   ]),
-                              child: Row(
-                                children: [
-                                  ClipRRect(
-                                    child: Container(
-                                      height: 70.0,
-                                      width: 70.0,
-                                      color: Color.fromARGB(255, 14, 38, 255),
-                                      child: Icon(Icons.person_2_sharp,
-                                          color: Colors.white, size: 50.0),
+                              child: GestureDetector(
+                                onTap: (){
+                                  select.add(clientselectedEvent(state.client[index].id.toString(),"",state.client[index].nom.toString(),state.client[index].prenom.toString()));
+                                  Navigator.pop(context);
+                                },
+                                child: Row(
+                                  children: [
+                                    ClipRRect(
+                                      child: Container(
+                                        height: 70.0,
+                                        width: 70.0,
+                                        color: Color.fromARGB(255, 14, 38, 255),
+                                        child: Icon(Icons.person_2_sharp,
+                                            color: Colors.white, size: 50.0),
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        state.client[index].nom.toString(),
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color:
-                                                Color.fromRGBO(0, 85, 211, 1),
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        state.client[index].prenom.toString(),
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.phone,size: 14,),
-                                          Text(
-                                            state.client[index].phone.toString(),
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          state.client[index].nom.toString(),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color:
+                                                  Color.fromRGBO(0, 85, 211, 1),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          state.client[index].prenom.toString(),
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(Icons.phone,size: 14,),
+                                            Text(
+                                              state.client[index].phone.toString(),
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               )),
                           Align(
                               alignment: Alignment(1, 1),

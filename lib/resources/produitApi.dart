@@ -15,6 +15,7 @@ class produitApi {
   }
 
   Createcommande(
+    String id ,
     List<panier> panier,
     double lat , 
     double long ,
@@ -43,7 +44,7 @@ class produitApi {
 //     //add command 
       final uri3 = Uri.parse("http://192.168.1.17:8000/api/commande");
     var res3 = await http.post(uri3, body: {
-      "idCard":randomnumber.toString(),"ComId" : "1","CliId" :"501" ,"lat" :lat.toString() ,"long" :long.toString() ,"id" :randomnumber.toString()
+      "idCard":randomnumber.toString(),"ComId" : "1","CliId" :id ,"lat" :lat.toString() ,"long" :long.toString() ,"id" :randomnumber.toString()
     });
 
 print("res2");

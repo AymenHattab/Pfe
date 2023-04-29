@@ -36,7 +36,7 @@ class BaskecontenttBloc extends Bloc<BasketEvent, BasketState> {
        on<Passcommand>(((event, emit) async {
       try {
         print("passcommande bloc is done ");
-        api.Createcommande(list, event.lat, event.long, event.clientId);
+        api.Createcommande(event.id,list, event.lat, event.long, event.clientId);
         list.clear();
         emit(BasketcontentList(list,0));
       } catch (error) {

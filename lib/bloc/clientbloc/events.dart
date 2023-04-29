@@ -19,10 +19,11 @@ class clientbuttonPressed extends clientEvents {
   clientbuttonPressed(this.email, this.psw);
 }
 class clientselectedEvent extends clientEvents {
+  final String id ; 
   final String Image ; 
   final String firstName ; 
   final String LastName ;
-  clientselectedEvent(this.Image,this.firstName, this.LastName);
+  clientselectedEvent(this.id,this.Image,this.firstName, this.LastName );
   List<Object?> get props => [Image,firstName,LastName];
 }
 

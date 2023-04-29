@@ -21,7 +21,8 @@ import '../model/PanierModel.dart';
 final List P = [];
 
 class shopping extends StatefulWidget {
-  shopping({super.key});
+
+  shopping({super.key  });
 
   @override
   State<shopping> createState() => _shoppingState();
@@ -29,6 +30,7 @@ class shopping extends StatefulWidget {
 
 class _shoppingState extends State<shopping> {
   final password = TextEditingController();
+
 
   Produitbloc _produitbloc = Produitbloc(Produitloadingevent(4));
   @override
@@ -62,16 +64,12 @@ Facturedraggable draggable = Facturedraggable();
             //   color : Color.fromRGBO(0, 95, 236, 1),
             // ),
           
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(width: 10),
                 clientsSidebar(),
-                // Icon(Image.asset(é)),
-
-                // add some space between the icon and the text field
-                SizedBox(width: 10),
+               SizedBox(height: 20,),
                 searchbar(
                   background: Color.fromARGB(0, 244, 67, 54),
                   colors: Colors.blue,

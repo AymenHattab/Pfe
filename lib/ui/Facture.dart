@@ -1,4 +1,5 @@
 import 'package:app/component/notification.dart';
+import 'package:app/model/clientModel.dart';
 import 'package:app/ui/Basket.dart';
 import 'package:app/ui/shopping.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ class facture extends StatefulWidget {
 }
 
 bool drag = false;
-
+    String name="" ;
+  String lastname="" ;
 class _factureState extends State<facture> {
   Facturedraggable draggable = Facturedraggable();
   void initState() {

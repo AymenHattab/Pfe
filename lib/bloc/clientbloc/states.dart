@@ -21,11 +21,12 @@ class clientloaded extends clientState {
 }
 
 class clientselectedState extends clientState {
+  String id ;
    String image ; 
    String firstName ; 
    String LastName;
-  clientselectedState(this.image,this.firstName, this.LastName);
-  List<Object?> get props => [image,firstName,LastName];
+  clientselectedState(this.id,this.image,this.firstName, this.LastName);
+  List<Object?> get props => [id,image,firstName,LastName];
 }
 
 

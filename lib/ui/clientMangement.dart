@@ -12,15 +12,15 @@ import '../component/notification.dart';
 import '../component/signupfield.dart';
 
 class clientsSidebar extends StatefulWidget {
-  const clientsSidebar({super.key});
 
+   clientsSidebar({super.key });
   @override
   State<clientsSidebar> createState() => _clientsSidebarState();
 }
 
 final search = TextEditingController();
 clientselect select = clientselect(clientselectedEvent(
-    "https://cdn-icons-png.flaticon.com/512/6009/6009864.png", "aa", ""));
+    "https://cdn-icons-png.flaticon.com/512/6009/6009864.png", "aa", "",""));
 
 class _clientsSidebarState extends State<clientsSidebar> {
   void initState() {
@@ -53,14 +53,34 @@ class _clientsSidebarState extends State<clientsSidebar> {
     return BlocBuilder<clientselect, clientState>(
       builder: (context, state) {
         if (state is clientselectedState) {
+          String name=state.firstName; 
+          String lastname=state.LastName; 
           return GestureDetector(
             onTap: () => {
               bloc.add(clientbuttonNotifcationsPressed()),
               openDialog()
             },
-            child: CircleAvatar(
-                radius: 20,
-                backgroundImage: NetworkImage(state.image)),
+            child: Container(
+              width: 200,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(0, 85, 255, 1),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(12),
+                  bottomRight: Radius.circular(12)
+                )
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                 Icon(Icons.person_add_alt, size: 20,color: Color.fromRGBO(255, 255, 255, 1),),
+                 SizedBox(width: 10,),
+                      Text("$name  $lastname",style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1),fontSize: 15,fontWeight : FontWeight.w300,),
+                      
+                      ),
+                     
+                ],
+              ),
+            ),
           );
         }
         return Container();

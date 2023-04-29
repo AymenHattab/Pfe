@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<BasketBloc>(create: (context) => BasketBloc()),
         BlocProvider<BaskecontenttBloc>(
             create: (context) => BaskecontenttBloc()),
-        BlocProvider<clientselect>(create: (context) => clientselect(clientselectedEvent("aa","aa",""))),
+        BlocProvider<clientselect>(create: (context) => clientselect(clientselectedEvent("aa","aa","",""))),
         BlocProvider<Facturedraggable>(create: (context) => Facturedraggable()),
         BlocProvider<CommercantProfileBloc>(create: (context) => CommercantProfileBloc(secondState())),
         BlocProvider<ProfileData>(create: (context) => ProfileData()),

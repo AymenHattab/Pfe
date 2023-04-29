@@ -90,7 +90,7 @@ class _mainpageState extends State<mainpage> {
               Container(
                 // ignore: sort_child_properties_last
                 child: Stack(children: [
-                  Positioned(top: 150, child: clientsSidebar()),
+                  // Positioned(top: 150, child: clientsSidebar()),
                   Positioned(
                       top: -30,
                       left: MediaQuery.of(context).size.width - 80,

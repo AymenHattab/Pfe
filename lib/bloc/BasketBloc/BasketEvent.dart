@@ -21,11 +21,11 @@ class AddListToBasket extends BasketEvent {
 class DeleteBasket extends BasketEvent {}
 
 class Passcommand extends BasketEvent {
-
+  String id ; 
   double lat;
   double long;
   int clientId;
-  Passcommand( this.lat, this.long, this.clientId);
+  Passcommand(this.id,  this.lat, this.long, this.clientId);
 }
 
 class BasketError extends BasketEvent {}
