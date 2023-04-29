@@ -79,7 +79,7 @@ dynamic markerIcon = Image(image: markerImage, fit: BoxFit.cover);
 //     });
 
   getcommande().then((value) => print(value.map((e) =>
- _markers.add(Marker(infoWindow: InfoWindow(
+ _markers.add(Marker(icon : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),infoWindow: InfoWindow(title: "test"
  ),markerId: const MarkerId("location.toString()"),  position : LatLng(e.lat!,e.long!) ),
       ))));
       return _markers ; 

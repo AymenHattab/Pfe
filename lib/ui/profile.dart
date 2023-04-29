@@ -4,6 +4,7 @@ import 'package:app/component/Objectifs.dart';
 import 'package:app/component/historique.dart';
 import 'package:app/component/particles/circle.dart';
 import 'package:app/main.dart';
+import 'package:app/ui/statics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -94,7 +95,7 @@ class _profileState extends State<profile> {
           height: 10,
         ),
         Expanded(
-          child: PageView(children: [Objectif(), historique()]),
+          child: PageView(children: [Objectif(), historique(),statics()]),
         )
       ],
     );
