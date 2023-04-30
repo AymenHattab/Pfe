@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 
@@ -7,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'dart:convert';
+
+import '../ui/RealFacture.dart';
 class CommercantApi{
 //getcommercant
  Future<List<clientModel>> Getcommercant() async{
@@ -67,7 +71,7 @@ class CommercantApi{
 
 
 
- markers()  {
+ markers(BuildContext context)  {
 ImageProvider markerImage = NetworkImage('https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
 ImageConfiguration configuration = ImageConfiguration(size: Size(120, 120));
 dynamic markerIcon = Image(image: markerImage, fit: BoxFit.cover);
@@ -79,7 +83,14 @@ dynamic markerIcon = Image(image: markerImage, fit: BoxFit.cover);
 //     });
 
   getcommande().then((value) => print(value.map((e) =>
- _markers.add(Marker(icon : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),infoWindow: InfoWindow(title: "test"
+ _markers.add(Marker(onTap: (){
+  print(e.id);
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RealFacture(id:e.id!)),
+      );
+
+ },icon : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),infoWindow: InfoWindow(title: "test"
  ),markerId: const MarkerId("location.toString()"),  position : LatLng(e.lat!,e.long!) ),
       ))));
       return _markers ; 

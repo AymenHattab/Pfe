@@ -23,7 +23,7 @@ class map extends StatefulWidget {
   late LatLng _center=LatLng(35.8245017, 10.6345833);
   CommercantApi api =  CommercantApi(); 
 class _mapState extends State<map> {
-final Set<Marker> _markers=api.markers() as Set<Marker>;
+
 
 
 late GoogleMapController mapController;
@@ -104,6 +104,7 @@ void _livelocation(){
   Offset _offset = Offset.zero;
   @override
   Widget build(BuildContext context) {
+    final Set<Marker> _markers=api.markers(context) as Set<Marker>;
     Future openDialog(lat,long) => showDialog(
           context: context,
           builder: (BuildContext context) {

@@ -14,7 +14,7 @@ import 'clientMangement.dart';
 
 final List<panier> Panier = [];
 
-double somme = 0;
+String somme = "0";
 
 class Basket extends StatefulWidget {
   
@@ -139,6 +139,7 @@ class _BasketState extends State<Basket> {
         BlocBuilder<BaskecontenttBloc, BasketState>(
           builder: (context, state) {
             if (state is BasketcontentList) {
+              somme=state.somme.toString();
               return  Text(
                           state.somme.toString(),
                           style: TextStyle(
@@ -168,7 +169,8 @@ class _BasketState extends State<Basket> {
                       ),
                       onPressed: () {
                         print("on pressed button");
-                        Numbercontent.add(Passcommand(id,widget.lat,widget.long,2));
+                        print(somme);
+                        Numbercontent.add(Passcommand(id,widget.lat,widget.long,2,somme));
                       },
                     ),
                   ],

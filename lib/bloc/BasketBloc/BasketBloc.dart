@@ -27,6 +27,7 @@ class BaskecontenttBloc extends Bloc<BasketEvent, BasketState> {
        on<DeleteBasket>(((event, emit) async {
       try {
         list.clear(); 
+        somme=0;
         emit(BasketcontentList(list,0));
         emit(BasketcontentNumber(list.length));
       } catch (error) {
@@ -36,7 +37,8 @@ class BaskecontenttBloc extends Bloc<BasketEvent, BasketState> {
        on<Passcommand>(((event, emit) async {
       try {
         print("passcommande bloc is done ");
-        api.Createcommande(event.id,list, event.lat, event.long, event.clientId);
+        print(event.montant);
+        api.Createcommande(event.id,list, event.lat, event.long, event.clientId,event.montant);
         list.clear();
         emit(BasketcontentList(list,0));
       } catch (error) {

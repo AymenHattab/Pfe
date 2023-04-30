@@ -25,7 +25,8 @@ class Passcommand extends BasketEvent {
   double lat;
   double long;
   int clientId;
-  Passcommand(this.id,  this.lat, this.long, this.clientId);
+  String montant ; 
+  Passcommand(this.id,  this.lat, this.long, this.clientId , this.montant);
 }
 
 class BasketError extends BasketEvent {}

@@ -20,6 +20,7 @@ class produitApi {
     double lat , 
     double long ,
     int clientId ,  
+    String montant 
   ) async {
     var randomnumber = RandomNumber();
     print(randomnumber);
@@ -32,7 +33,7 @@ class produitApi {
       }
       );
     print(response.statusCode);
-    //add Product to card
+//     //add Product to card
     final uri2 = Uri.parse("http://192.168.1.17:8000/api/commercant/cardItem");
     for(int i = 0 ; i<panier.length ; i++){
       var id=panier[i].id.toString();
@@ -41,14 +42,20 @@ class produitApi {
         .post(uri2, body: {"idproduit":panier[i].id.toString(), "qte_produit":panier[i].qte.toString(), "Prix":panier[i].prix.toString(), "idcard":randomnumber});
 
     }
-//     //add command 
+// //     //add command 
       final uri3 = Uri.parse("http://192.168.1.17:8000/api/commande");
     var res3 = await http.post(uri3, body: {
       "idCard":randomnumber.toString(),"ComId" : "1","CliId" :id ,"lat" :lat.toString() ,"long" :long.toString() ,"id" :randomnumber.toString()
     });
+print(montant);
+    //add facture 
+        final uri4 = Uri.parse("http://192.168.1.17:8000/api/facture");
+    var res4 = await http.post(uri4, body: {
+      "montant" :montant, "code_cmd" :randomnumber.toString()
+    });
 
-print("res2");
-print(res3.statusCode);
+
+
   }
 
   Future<List<categorymodel>> Getcategorys() async {
