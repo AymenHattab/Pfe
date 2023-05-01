@@ -104,7 +104,9 @@ void _livelocation(){
   Offset _offset = Offset.zero;
   @override
   Widget build(BuildContext context) {
+
     final Set<Marker> _markers=api.markers(context) as Set<Marker>;
+   
     Future openDialog(lat,long) => showDialog(
           context: context,
           builder: (BuildContext context) {

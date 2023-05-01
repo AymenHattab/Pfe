@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../model/FactureModel.dart';
 import '../../model/PanierModel.dart';
 
 class BasketState extends Equatable {
@@ -8,7 +9,11 @@ class BasketState extends Equatable {
   List<Object?> get props => [];
 }
 
-class test extends BasketState {}
+class FactureLoadedState extends BasketState {
+  List<FactureModel> Facture ; 
+  FactureLoadedState(this.Facture);
+  List<Object?> get props => [Facture];
+}
 
 class BasketcontentNumber extends BasketState {
   int Number ; 

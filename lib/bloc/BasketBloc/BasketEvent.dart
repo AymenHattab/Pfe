@@ -19,7 +19,11 @@ class AddListToBasket extends BasketEvent {
 }
 
 class DeleteBasket extends BasketEvent {}
-
+class FactureEvent extends BasketEvent {
+  int id ; 
+FactureEvent(this.id);
+List<Object?> get props => [id];
+}
 class Passcommand extends BasketEvent {
   String id ; 
   double lat;

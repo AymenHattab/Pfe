@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'dart:math';
 
+import '../model/FactureModel.dart';
 import '../model/PanierModel.dart';
 import '../model/Produit.dart';
 import 'package:http/http.dart' as http;
@@ -92,6 +93,21 @@ print(montant);
       list.produit?.forEach((element) {
         posts.add(list);
       });
+      return posts;
+    }
+    return posts;
+  }
+  Future<List<FactureModel>> getFacture(int id) async {
+    print(id);
+    List<FactureModel> posts = [];
+    final uri = Uri.parse("http://192.168.1.17:8000/api/client/commande/$id");
+    var res = await http.get(uri);
+    print(" test $res");
+    if (res.statusCode == 200) {
+      // data.map((post) => MapEntry(post['id'], Produit.fromJson(post))).toList();
+      var data = json.decode(res.body);
+      var list = FactureModel.fromJson(data);
+      posts.add(list);
       return posts;
     }
     return posts;
