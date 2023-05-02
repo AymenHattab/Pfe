@@ -22,14 +22,14 @@ class mainpage extends StatefulWidget {
   State<mainpage> createState() => _mainpageState();
 }
 
-  List <clientModel> test=[] ;
+List<clientModel> test = [];
+var displayMapbutton= true; 
 class _mainpageState extends State<mainpage> {
-
   @override
   CommercantProfileBloc displayHistoric = CommercantProfileBloc(secondState());
   void initState() {
     displayHistoric = BlocProvider.of<CommercantProfileBloc>(context);
-    displayHistoric.add(CommercantLogged()); 
+    displayHistoric.add(CommercantLogged());
     super.initState();
   }
 
@@ -100,7 +100,9 @@ class _mainpageState extends State<mainpage> {
                       print("state $state");
                       if (state is Commercant) {
                         print('aaa');
-                        return data(montant: state.commercant[0].montantActuelle.toString());
+                        return data(
+                            montant:
+                                state.commercant[0].montantActuelle.toString());
                       }
                       return Container(child: Text("test"));
                     },
@@ -109,7 +111,6 @@ class _mainpageState extends State<mainpage> {
                   //   print(index);
                   //    return data(montant: cm.commercant[index].montantActuelle.toString());
                   // }, )
-                  
                 ]),
                 height: 130,
                 width: MediaQuery.of(context).size.width,
@@ -130,8 +131,10 @@ class _mainpageState extends State<mainpage> {
           // IconButton(onPressed: ()=>displayHistoric.add(CommercantLogin("yosri@gmail.com","azerty")), icon: Icon(Icons.add)),
 
           Flexible(
-            child: map(),
-          ),
+              child: Container(
+            height: MediaQuery.of(context).size.height,
+            color: Colors.red,
+          )),
         ],
       ),
     );

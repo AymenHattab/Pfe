@@ -2,6 +2,7 @@
 
 import 'package:app/component/historique.dart';
 import 'package:equatable/equatable.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../model/modelTest.dart';
 class commercantState extends Equatable {
@@ -29,6 +30,7 @@ class CommandeDisplayed  extends commercantState{
 }
 class Commercant extends commercantState{
   List <clientModel> commercant =[] ; 
+ 
   Commercant(this.commercant); 
   List<Object?> get props =>[commercant];
 }

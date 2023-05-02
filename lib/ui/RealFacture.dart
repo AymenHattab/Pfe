@@ -9,8 +9,8 @@ import '../model/FactureModel.dart';
 import '../resources/produitApi.dart';
 
 class RealFacture extends StatefulWidget {
-  
-  RealFacture({ super.key});
+  int id ;
+  RealFacture({ super.key, required this.id});
 
   @override
   State<RealFacture> createState() => _RealFactureState();
@@ -20,6 +20,8 @@ class _RealFactureState extends State<RealFacture> {
   BaskecontenttBloc Facturedisplay = BaskecontenttBloc();
   @override
   void initState() {
+   var Facturedisplay = BlocProvider.of<BaskecontenttBloc>(context);
+   Facturedisplay.add(FactureEvent(widget.id));
   
     super.initState();
   }

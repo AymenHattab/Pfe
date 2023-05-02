@@ -103,6 +103,7 @@ print(montant);
     final uri = Uri.parse("http://192.168.1.17:8000/api/client/commande/$id");
     var res = await http.get(uri);
     print(" test $res");
+    print(res.statusCode);
     if (res.statusCode == 200) {
       // data.map((post) => MapEntry(post['id'], Produit.fromJson(post))).toList();
       var data = json.decode(res.body);

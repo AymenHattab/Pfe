@@ -25,7 +25,7 @@ class ApiProvider {
     }
   }
 
-  getuser( ) async {
+  getuser() async {
   Map Jsondata = {
             "nom": "aaaa",
             "prenom": "hattab",

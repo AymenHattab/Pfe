@@ -26,6 +26,7 @@ class _profileState extends State<profile> {
     super.initState();
   }
 
+    int Number=0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,37 +58,47 @@ class _profileState extends State<profile> {
               Positioned(left: -50, top: 10, child: circle()),
               Positioned(
                 top: 190,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Objectif",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontFamily: "Lexend",
-                          fontSize: 13),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      "Historique",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontFamily: "Lexend",
-                          fontSize: 13),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      "Statistiue",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontFamily: "Lexend",
-                          fontSize: 13),
-                    ),
-                  ],
+                child: Container(
+                  width: 300,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Objectif",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Lexend",
+                                fontSize: 13),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Historique",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Lexend",
+                                fontSize: 13),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Statistiue",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Lexend",
+                                fontSize: 13),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5,),
+                      AnimatedAlign(duration: Duration(milliseconds:300 ),curve: Curves.easeIn,alignment:Alignment (Number-1, 0),
+                      child: Container(height: 2,width: 60, color: Colors.white,))
+                    ],
+                  ),
                 ),
               ),
             ]),
@@ -95,7 +106,13 @@ class _profileState extends State<profile> {
           height: 10,
         ),
         Expanded(
-          child: PageView(children: [Objectif(), historique(),statics()]),
+          child: PageView(onPageChanged: (value) {
+            print(value);
+        
+            setState(() {
+            Number=value;
+            });
+          },children: [Objectif(), historique(),statics()]),
         )
       ],
     );

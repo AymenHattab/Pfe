@@ -73,10 +73,12 @@ class CommercantApi {
 //  Future<Set<Marker>>
   Set<Marker> _markers = {};
   markers(BuildContext context) {
-    var Facturedisplay = BlocProvider.of<BaskecontenttBloc>(context);
+    print("inside markers methode ");
+   
    getcommande().then((value) {
 for (int i=0 ; i<value.length ; i++){
   var e = value[i];
+  int test=e.id!;
     _markers.add(
       Marker(
         icon: BitmapDescriptor.defaultMarkerWithHue(
@@ -87,11 +89,12 @@ for (int i=0 ; i<value.length ; i++){
         markerId:  MarkerId(e.id.toString()),
         position: LatLng(e.lat!, e.long!),
          onTap: () {
-           Facturedisplay.add(FactureEvent(e.id!));
-            Navigator.push(
+                if (e.id != null){
+            var push = Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RealFacture()),
+                MaterialPageRoute(builder: (context) => RealFacture(id:1,)),
               );
+                }
           print(e.id);
 
         }, 

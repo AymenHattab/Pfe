@@ -28,6 +28,7 @@ import 'bloc/BasketBloc/BasketState.dart';
 import 'bloc/CommercantBloc/commercantEvents.dart';
 import 'bloc/CommercantBloc/commercantbloc.dart';
 import 'bloc/FactureBloc/FactureBloc.dart';
+import 'bloc/MapBloc/mapBloc.dart';
 import 'bloc/clientbloc/events.dart';
 import 'bloc/produitbloc/produitsevents.dart';
 import 'drawer.dart';
@@ -58,6 +59,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<clientselect>(create: (context) => clientselect(clientselectedEvent("aa","aa","",""))),
         BlocProvider<Facturedraggable>(create: (context) => Facturedraggable()),
         BlocProvider<CommercantProfileBloc>(create: (context) => CommercantProfileBloc(secondState())),
+        BlocProvider<MapBloc>(create: (context) => MapBloc(OnmapcreatedState({},false))),
         BlocProvider<ProfileData>(create: (context) => ProfileData()),
 
       ],

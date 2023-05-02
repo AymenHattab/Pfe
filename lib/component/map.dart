@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import '../bloc/CommercantBloc/commercantState.dart';
+import '../bloc/CommercantBloc/commercantbloc.dart';
+import '../bloc/MapBloc/mapBloc.dart';
 import '../bloc/clientbloc/bloc.dart';
 import '../bloc/clientbloc/events.dart';
 import '../bloc/clientbloc/states.dart';
@@ -22,15 +25,13 @@ class map extends StatefulWidget {
 
   late LatLng _center=LatLng(35.8245017, 10.6345833);
   CommercantApi api =  CommercantApi(); 
+   Set<Marker> _markers= {}; 
 class _mapState extends State<map> {
-
-
-
 late GoogleMapController mapController;
   String lat =""; 
   String long ="" ; 
-  late LatLng markerPosition;
-clientbloc bloc = clientbloc(clientbuttonNotifcationsPressed());
+  bool displayMap = true; 
+late LatLng markerPosition;
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
    
     void _addMarker(LatLng location) {
@@ -42,23 +43,31 @@ clientbloc bloc = clientbloc(clientbuttonNotifcationsPressed());
       markerPosition = location;
     });
   } 
-  
+MapBloc bloc = MapBloc(OnmapcreatedState({},false));
   void initState(){
-    bloc = BlocProvider.of<clientbloc>(context);
+     
+    bloc = BlocProvider.of<MapBloc>(context);
+    
     addcustomIcon();
     super.initState();
   }
     void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+_livelocation();
+      Set<Marker> _markers={Marker(
+        icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueCyan),
+        infoWindow: InfoWindow(
+          title:"current place",
+        ),
+        markerId:  MarkerId("commercant place"),
+        position: LatLng(_center.latitude,_center.latitude),
+      )};
+    
   }
 
   Future<Position> _getLocation() async {
-//     print("0");
-// bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-// print(serviceEnabled);
-// if(!serviceEnabled){ 
-//   print("1"); 
-//   return Future.error("Location enabled"); }
+
 LocationPermission permission = await Geolocator.checkPermission(); 
   permission = await Geolocator.requestPermission();
 print("permission");
@@ -83,8 +92,6 @@ void _livelocation(){
   );  
    
   Geolocator.getPositionStream(locationSettings: locationsettings).listen((Position position) {
-      print(position);
-
     setState(() {
       _center = LatLng(position.latitude,position.longitude) ; 
       print(_center);
@@ -104,78 +111,78 @@ void _livelocation(){
   Offset _offset = Offset.zero;
   @override
   Widget build(BuildContext context) {
-
-    final Set<Marker> _markers=api.markers(context) as Set<Marker>;
-   
     Future openDialog(lat,long) => showDialog(
           context: context,
           builder: (BuildContext context) {
-        insetPadding: EdgeInsets.all(20);
+          insetPadding: EdgeInsets.all(20);
            return facture(lat: lat,long: long,);
-    
           }
         );
-    return Stack(
-      clipBehavior:Clip.antiAliasWithSaveLayer,
-      children:[ 
-        
-        GoogleMap(
-        onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(target: _center,
-              zoom:13,
-            ),
-            onTap: (LatLng location){
-              print(" location == $location");
-                  openDialog(location.latitude,location.longitude);
-              setState(() {
-                print(location);
-              _markers.add(Marker(markerId: MarkerId(location.toString()), position : location ),
-             
-              ); 
-              });
-            },
-            
-            markers: _markers,
-      ),
-  //     Container(height: 50,
-  //     decoration: BoxDecoration(
-  //       gradient: LinearGradient(
-  //         stops: [0, 10],
-  //     begin: Alignment.topCenter,
-  //     end: Alignment.bottomCenter,
-  //     colors: [
-  //       Color.fromARGB(127, 0, 0, 0),
-  //       Color.fromARGB(0, 0, 0, 0),
-  //     ],
-  //   ),
-  //    boxShadow: [
-  //     BoxShadow(
-  //       color: Colors.black.withOpacity(0.1),
-  //       spreadRadius: 6,
-  //       blurRadius: 10,
-  //       offset: Offset(0, 3),
-  //     ),
-  //   ],
-  // ),
-      // ),
-      
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                searchbar(
-                  background: Color.fromRGBO(0, 95, 236, 1),
-                    colors: Colors.white,
-                  hint: "recherche une location",
-                  icon: Icons.map,
-                ),
-                 IconButton(onPressed: ()=>{_getLocation()}, icon: Icon(Icons.location_on),iconSize: 40,color: Colors.red,)
-              ],
-            ),
-          ],
+    return BlocListener<MapBloc,MapState>(
+listener:(context, state) {
+  if (state is OnmapcreatedState ){
+    if (state.displayed==true){
+      setState(() {
+        _markers = state.marker ; 
+    displayMap = false ; 
+      });
+    
+    }else{
+       setState(() {
+        _markers = {} ; 
+    displayMap = true ; 
+      }); 
+    }
+  }
+}, 
+      child: Stack(
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        children:[ 
+          
+          GoogleMap(
+          onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(target: _center,
+                zoom:13,
+              ),
+              onTap: (LatLng location){
+                print(" location == $location");
+                    openDialog(location.latitude,location.longitude);
+              },
+              
+              markers: _markers,
         ),
-      
-    ]);
+      //     Container(height: 50,
+      //     decoration: BoxDecoration(
+      //       gradient: LinearGradient(
+      //         stops: [0, 10],
+      //     begin: Alignment.topCenter,
+      //     end: Alignment.bottomCenter,
+      //     colors: [
+      //       Color.fromARGB(127, 0, 0, 0),
+      //       Color.fromARGB(0, 0, 0, 0),
+      //     ],
+      //   ),
+      //    boxShadow: [
+      //     BoxShadow(
+      //       color: Colors.black.withOpacity(0.1),
+      //       spreadRadius: 6,
+      //       blurRadius: 10,
+      //       offset: Offset(0, 3),
+      //     ),
+      //   ],
+      // ),
+        // ),
+        
+          Column(
+            children: [
+          //     FloatingActionButton(onPressed: (){
+          //   bloc.add(OnmapcreatedEvent(context,displayMap));
+          // }),
+              // FloatingActionButton(onPressed: ()=>{_getLocation()} ,child: Icon(Icons.place_rounded , ), backgroundColor: Color.fromRGBO(0, 85, 255, 1), focusColor: Colors.red, ),
+            ],
+          ),
+        
+      ]),
+    );
   }
 }
