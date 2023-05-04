@@ -25,9 +25,7 @@ class _signupState extends State<signup> {
     super.initState();
   }
 
-  void dispose() {
-    bloc.close();
-  }
+ 
 
   final _formKey = GlobalKey<FormState>();
 

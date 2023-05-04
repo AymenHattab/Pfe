@@ -34,32 +34,30 @@ class _staticsState extends State<statics> {
           print(_data);
         }
       },
-      child: Expanded(
-        child: Container(
-          child: SfCartesianChart(
-            // Add chart data and customize chart appearance here
-            series: <LineSeries>[
-              LineSeries<Data, num>(
-                dataSource: _data,
-                xValueMapper: (Data data, _) => data.y,
-                yValueMapper: (Data data, _) => data.x,
-                width: 4,
-                 pointColorMapper: (Data data, _) =>
-                      data.x > 160 ? Colors.blue : Colors.red,
-              ),
-            ],
-            title: ChartTitle(
-                text: 'Évolution des bénéfices',
-                textStyle: TextStyle(
-                    color: Color.fromRGBO(0, 102, 255, 1),
-                    fontFamily: 'Lexend',
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold)),
-            // legend: Legend(isVisible: true),
-            tooltipBehavior: TooltipBehavior(enable: true),
-            primaryXAxis: NumericAxis(),
-            primaryYAxis: NumericAxis(),
-          ),
+      child: Container(
+        child: SfCartesianChart(
+          // Add chart data and customize chart appearance here
+          series: <LineSeries>[
+            LineSeries<Data, num>(
+              dataSource: _data,
+              xValueMapper: (Data data, _) => data.y,
+              yValueMapper: (Data data, _) => data.x,
+              width: 4,
+               pointColorMapper: (Data data, _) =>
+                    data.x > 160 ? Colors.blue : Colors.red,
+            ),
+          ],
+          title: ChartTitle(
+              text: 'Évolution des bénéfices',
+              textStyle: TextStyle(
+                  color: Color.fromRGBO(0, 102, 255, 1),
+                  fontFamily: 'Lexend',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold)),
+          // legend: Legend(isVisible: true),
+          tooltipBehavior: TooltipBehavior(enable: true),
+          primaryXAxis: NumericAxis(),
+          primaryYAxis: NumericAxis(),
         ),
       ),
     );

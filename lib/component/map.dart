@@ -1,10 +1,12 @@
 import 'package:app/component/search.dart';
 import 'package:app/main.dart';
 import 'package:app/ui/Facture.dart';
+import 'package:app/ui/RealFacture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import '../bloc/CommercantBloc/commercantEvents.dart';
 import '../bloc/CommercantBloc/commercantState.dart';
 import '../bloc/CommercantBloc/commercantbloc.dart';
 import '../bloc/MapBloc/mapBloc.dart';
@@ -43,28 +45,18 @@ late LatLng markerPosition;
       markerPosition = location;
     });
   } 
-MapBloc bloc = MapBloc(OnmapcreatedState({},false));
+
   void initState(){
-     
-    bloc = BlocProvider.of<MapBloc>(context);
-    
-    addcustomIcon();
     super.initState();
   }
     void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-_livelocation();
-      Set<Marker> _markers={Marker(
-        icon: BitmapDescriptor.defaultMarkerWithHue(
-        BitmapDescriptor.hueCyan),
-        infoWindow: InfoWindow(
-          title:"current place",
-        ),
-        markerId:  MarkerId("commercant place"),
-        position: LatLng(_center.latitude,_center.latitude),
-      )};
-    
+    mapController = controller;    
   }
+  void _updateMarkers(){}
+
+
+
+
 
   Future<Position> _getLocation() async {
 
@@ -92,10 +84,11 @@ void _livelocation(){
   );  
    
   Geolocator.getPositionStream(locationSettings: locationsettings).listen((Position position) {
-    setState(() {
-      _center = LatLng(position.latitude,position.longitude) ; 
-      print(_center);
-    });
+      // _center = LatLng(position.latitude,position.longitude) ; 
+    mapController.animateCamera(CameraUpdate.newCameraPosition( 
+        CameraPosition(target: LatLng(position.latitude,position.longitude), zoom: 14)));
+
+  
    }); 
 }
 
@@ -111,6 +104,13 @@ void _livelocation(){
   Offset _offset = Offset.zero;
   @override
   Widget build(BuildContext context) {
+    Future openFacture(id) => showDialog(
+          context: context,
+          builder: (BuildContext context) {
+          insetPadding: EdgeInsets.all(20);
+           return RealFacture(id: id);
+          }
+        );
     Future openDialog(lat,long) => showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -118,28 +118,40 @@ void _livelocation(){
            return facture(lat: lat,long: long,);
           }
         );
-    return BlocListener<MapBloc,MapState>(
+    return BlocListener<CommercantProfileBloc,commercantState>(
 listener:(context, state) {
-  if (state is OnmapcreatedState ){
-    if (state.displayed==true){
-      setState(() {
-        _markers = state.marker ; 
-    displayMap = false ; 
-      });
+  if (state is Commercant ){
+         for (int i = 0; i < state.commande.length; i++) {
+        var p = state.commande[i];
+        for (int j = 0; j < p.commande!.length ; j++) {
+            var e = p.commande![i]; 
+        _markers.add(Marker(
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          infoWindow: InfoWindow(
+            title: e.client!.nom.toString(),
+          ),
+          markerId: MarkerId(e.id.toString()),
+          position: LatLng(e.lat!, e.long!),
+          onTap: () {
+           
+          },
+        ));
+      }}
+  };
+
     
-    }else{
-       setState(() {
-        _markers = {} ; 
-    displayMap = true ; 
-      }); 
-    }
-  }
-}, 
+
+  }, 
       child: Stack(
         clipBehavior:Clip.antiAliasWithSaveLayer,
         children:[ 
           
           GoogleMap(
+            onCameraMove : (LatLng){
+                  print(LatLng);
+            },
+            myLocationButtonEnabled : false ,
+          zoomControlsEnabled : false ,
           onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(target: _center,
                 zoom:13,
@@ -175,10 +187,15 @@ listener:(context, state) {
         
           Column(
             children: [
-          //     FloatingActionButton(onPressed: (){
-          //   bloc.add(OnmapcreatedEvent(context,displayMap));
-          // }),
-              // FloatingActionButton(onPressed: ()=>{_getLocation()} ,child: Icon(Icons.place_rounded , ), backgroundColor: Color.fromRGBO(0, 85, 255, 1), focusColor: Colors.red, ),
+              FloatingActionButton(onPressed: (){
+                final MarkerId targetMarkerId = MarkerId('2003');
+             final Marker targetMarker = _markers.firstWhere((marker) => marker.markerId == targetMarkerId);
+    print("target is not null "); 
+  if (targetMarker != null) {
+    mapController.animateCamera(CameraUpdate.newLatLngZoom(targetMarker.position, 15));
+  }
+          }),
+              FloatingActionButton(onPressed: ()=>{_getLocation()} ,child: Icon(Icons.place_rounded , ), backgroundColor: Color.fromRGBO(0, 85, 255, 1), focusColor: Colors.red, ),
             ],
           ),
         

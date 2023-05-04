@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../model/modelTest.dart';
 import '../../resources/Apicommercant.dart';
 import 'commercantEvents.dart';
 import 'commercantState.dart';
@@ -32,7 +33,8 @@ class CommercantProfileBloc extends Bloc<commercantEvents,commercantState>{
 
     on<CommercantLogged>((event, emit) async {
       final   list = await Api.Getcommercant();
-       emit(Commercant(list));
+      final  commande = await Api.getcommande();
+       emit(Commercant(list,commande));
     },);
 
 

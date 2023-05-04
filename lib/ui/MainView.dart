@@ -24,6 +24,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 
 import '../bloc/BasketBloc/BasketState.dart';
+import '../bloc/CommercantBloc/commercantEvents.dart';
+import '../bloc/CommercantBloc/commercantbloc.dart';
 import '../blocbuilderManagment.dart/commercantManagement.dart';
 import '../drawer.dart';
 
@@ -39,10 +41,18 @@ class mainview extends StatefulWidget {
 }
 
 class _MyAppState extends State<mainview> {
+    CommercantProfileBloc displayHistoric = CommercantProfileBloc(secondState());
+  @override
+  void initState() {
+      displayHistoric = BlocProvider.of<CommercantProfileBloc>(context);
+    displayHistoric.add(CommercantLogged(context));
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -65,6 +75,7 @@ final tabs = [
 
 final icon = [
   const notification(),
+  const notification(),
   Stack(children: [
     Positioned(
         left: 5,
@@ -82,7 +93,7 @@ final icon = [
         )),
     // const basket()
   ]),
-  const notification(),
+  
 ];
 final color = [
   Colors.white,

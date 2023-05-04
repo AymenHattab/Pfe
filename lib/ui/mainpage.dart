@@ -23,13 +23,15 @@ class mainpage extends StatefulWidget {
 }
 
 List<clientModel> test = [];
-var displayMapbutton= true; 
+var displayMapbutton = true;
+bool menudrag = false;
+
 class _mainpageState extends State<mainpage> {
   @override
   CommercantProfileBloc displayHistoric = CommercantProfileBloc(secondState());
   void initState() {
-    displayHistoric = BlocProvider.of<CommercantProfileBloc>(context);
-    displayHistoric.add(CommercantLogged());
+    // displayHistoric = BlocProvider.of<CommercantProfileBloc>(context);
+    // displayHistoric.add(CommercantLogged(context));
     super.initState();
   }
 
@@ -56,85 +58,96 @@ class _mainpageState extends State<mainpage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.pushNamed(context, "/shop");
-      //   },
-      //   child: Icon(Icons.shop),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // bottomNavigationBar: BottomNavigationBar(
-      //   currentIndex: _currentIndex,
-      //   onTap: (index) {
-      //     print(index);
-      //     setState(() {
-      //       _currentIndex = index;
-      //       if (_currentIndex == 1) {
-      //         Navigator.pushNamed(context, "/profile");
-      //       }
-      //     });
-      //   },
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       backgroundColor: Colors.blue,
-      //       label: "Text",
-      //     ),
-      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: "hello")
-      //   ],
-      // ),
-      body: Column(
+   
+      body: Stack(
         children: [
-          Stack(
-            children: [
-              Container(
-                // ignore: sort_child_properties_last
-                child: Stack(children: [
-                  // Positioned(top: 150, child: clientsSidebar()),
-                  Positioned(
-                      top: -30,
-                      left: MediaQuery.of(context).size.width - 80,
-                      child: circle()),
-                  BlocBuilder<CommercantProfileBloc, commercantState>(
-                    builder: (context, state) {
-                      print("state $state");
-                      if (state is Commercant) {
-                        print('aaa');
-                        return data(
-                            montant:
-                                state.commercant[0].montantActuelle.toString());
-                      }
-                      return Container(child: Text("test"));
-                    },
-                  ),
-                  // ListView.builder(itemCount:cm.commercant.length,itemBuilder:(context, index) {
-                  //   print(index);
-                  //    return data(montant: cm.commercant[index].montantActuelle.toString());
-                  // }, )
-                ]),
-                height: 130,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.2, 1],
-                    colors: [
-                      Color.fromRGBO(8, 115, 209, 1),
-                      Color.fromRGBO(0, 95, 236, 1),
-                    ],
-                  ),
+          const Flexible(child: map()),
+          AnimatedContainer(
+            clipBehavior: Clip.none,
+            duration: Duration(seconds: 1),
+            curve: Curves.decelerate,
+            // ignore: sort_child_properties_last
+            child: Column(
+              children: [
+                BlocBuilder<CommercantProfileBloc, commercantState>(
+                  builder: (context, state) {
+                    print("state $state");
+                    if (state is Commercant) {
+                      print('aaa');
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          data(
+                              montant: state.commercant[0].montantActuelle
+                                  .toString()),
+                          AnimatedContainer(
+                            
+                            duration: Duration(seconds: 1),
+                            height: menudrag ? 250 : 0,
+                            curve: Curves.decelerate,
+                            child: ListView.builder(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                                itemCount: state.commande[0].commande!.length,
+                                itemBuilder: (context, index) {
+                                  var name = state.commande[0].commande![index].client!.nom.toString();
+                                  var lastname = state.commande[0].commande![index].client!.prenom.toString();
+                                  var date = state.commande[0].commande![index].facture?.date.toString(); 
+                                  if (date == null ){
+                                    date ="";
+                                  }
+                                  return Container(
+                                    height: 50,
+                                    width: 100,
+                                    color: Colors.white10,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                            "$name  $lastname", style: TextStyle(color: Colors.white,fontSize: 15, fontFamily: "lexend"),),
+                                        Text(
+                                            date, style: TextStyle(color: Colors.white,fontSize: 15, fontFamily: "lexend"),),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          )
+                        ],
+                      );
+                    }
+                    return Container(child: const Text("test"));
+                  },
                 ),
-              ),
-            ],
-          ),
-          // IconButton(onPressed: ()=>displayHistoric.add(CommercantLogin("yosri@gmail.com","azerty")), icon: Icon(Icons.add)),
+                  Flexible(
+                    child: Align(alignment: Alignment(0, 1),child: IconButton(onPressed: (){
+                                  if (menudrag == false ){
+                    setState(() {
+                    menudrag = true ; 
+                    });
+                                  }else {setState(() {
+                    menudrag = false  ; 
+                    }); }
+                                }, icon: Icon(Icons.maximize_outlined, color: Colors.white, size: 40,))),
+                  )
 
-          Flexible(
-              child: Container(
-            height: MediaQuery.of(context).size.height,
-            color: Colors.red,
-          )),
+              ],
+            ),
+            height: menudrag ? 400 : 150,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50)),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.3, 1],
+                colors: [
+                  Color.fromRGBO(8, 115, 209, 1),
+                  Color.fromRGBO(0, 95, 236, 1),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

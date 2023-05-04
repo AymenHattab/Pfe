@@ -54,7 +54,8 @@ class _BasketState extends State<Basket> {
         BlocBuilder<BaskecontenttBloc, BasketState>(
           builder: (context, state) {
             if (state is BasketcontentList) {
-              return Expanded(
+              return Container(
+                height: 300,
                 child: ListView.builder(
                   itemCount: state.ListPanier.length,
                   itemBuilder: ((context, index) {

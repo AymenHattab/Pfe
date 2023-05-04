@@ -20,7 +20,9 @@ class CommercantLogin extends commercantEvents {
   CommercantLogin(this.email , this.mdp);
 }
 class CommercantLogged extends commercantEvents {
-
+ BuildContext context ; 
+ CommercantLogged(this.context);
+ List<Object?> get props =>[context];
 }
 
 
