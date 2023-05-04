@@ -19,7 +19,9 @@ import '../ui/clientMangement.dart';
 
 
 class map extends StatefulWidget {
-  const map({super.key});
+  Set<Marker> markers= {};
+   final void Function(GoogleMapController) callback;
+   map({super.key  , required this.callback});
 
   @override
   State<map> createState() => _mapState();
@@ -27,9 +29,10 @@ class map extends StatefulWidget {
 
   late LatLng _center=LatLng(35.8245017, 10.6345833);
   CommercantApi api =  CommercantApi(); 
-   Set<Marker> _markers= {}; 
+   
+   
 class _mapState extends State<map> {
-late GoogleMapController mapController;
+
   String lat =""; 
   String long ="" ; 
   bool displayMap = true; 
@@ -49,8 +52,10 @@ late LatLng markerPosition;
   void initState(){
     super.initState();
   }
+  Set<Marker> _markers= {};
+  late GoogleMapController MapController;
     void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;    
+  widget.callback(controller);
   }
   void _updateMarkers(){}
 
@@ -83,13 +88,13 @@ void _livelocation(){
     distanceFilter: 100, 
   );  
    
-  Geolocator.getPositionStream(locationSettings: locationsettings).listen((Position position) {
-      // _center = LatLng(position.latitude,position.longitude) ; 
-    mapController.animateCamera(CameraUpdate.newCameraPosition( 
-        CameraPosition(target: LatLng(position.latitude,position.longitude), zoom: 14)));
+  // Geolocator.getPositionStream(locationSettings: locationsettings).listen((Position position) {
+  //     // _center = LatLng(position.latitude,position.longitude) ; 
+  //  mapController.animateCamera(CameraUpdate.newCameraPosition( 
+  //       CameraPosition(target: LatLng(position.latitude,position.longitude), zoom: 14)));
 
   
-   }); 
+  // }); 
 }
 
   void addcustomIcon(){
@@ -121,10 +126,10 @@ void _livelocation(){
     return BlocListener<CommercantProfileBloc,commercantState>(
 listener:(context, state) {
   if (state is Commercant ){
-         for (int i = 0; i < state.commande.length; i++) {
-        var p = state.commande[i];
-        for (int j = 0; j < p.commande!.length ; j++) {
-            var e = p.commande![i]; 
+    print("hello");
+         for (int i = 0; i < state.commande[0].commande!.length; i++) {
+            var e = state.commande[0].commande![i]; 
+            print(e);
         _markers.add(Marker(
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
           infoWindow: InfoWindow(
@@ -137,7 +142,7 @@ listener:(context, state) {
           },
         ));
       }}
-  };
+  
 
     
 
@@ -150,6 +155,8 @@ listener:(context, state) {
             onCameraMove : (LatLng){
                   print(LatLng);
             },
+            mapType: MapType.normal,
+
             myLocationButtonEnabled : false ,
           zoomControlsEnabled : false ,
           onMapCreated: _onMapCreated,
@@ -187,14 +194,14 @@ listener:(context, state) {
         
           Column(
             children: [
-              FloatingActionButton(onPressed: (){
-                final MarkerId targetMarkerId = MarkerId('2003');
-             final Marker targetMarker = _markers.firstWhere((marker) => marker.markerId == targetMarkerId);
-    print("target is not null "); 
-  if (targetMarker != null) {
-    mapController.animateCamera(CameraUpdate.newLatLngZoom(targetMarker.position, 15));
-  }
-          }),
+  //             FloatingActionButton(onPressed: (){
+  //               final MarkerId targetMarkerId = MarkerId('2003');
+  //            final Marker targetMarker = _markers.firstWhere((marker) => marker.markerId == targetMarkerId);
+  //   print("target is not null "); 
+  // if (targetMarker != null) {
+  //   widget.mapController.animateCamera(CameraUpdate.newLatLngZoom(targetMarker.position, 15));
+  // }
+  //         }),
               FloatingActionButton(onPressed: ()=>{_getLocation()} ,child: Icon(Icons.place_rounded , ), backgroundColor: Color.fromRGBO(0, 85, 255, 1), focusColor: Colors.red, ),
             ],
           ),

@@ -75,26 +75,22 @@ class CommercantApi {
   Set<Marker> _markers = {};
        
   markers(BuildContext context) {
-    
-    print("inside markers methode ");
-
     getcommande().then((value) {
-      for (int i = 0; i < value.length; i++) {
-        var p = value[i];
-        for (int j = 0; j < p.commande!.length ; j++) {
-            var e = p.commande![i]; 
+      for (int i = 0; i < value[0].commande!.length; i++) {
+        var e = value[0].commande![i];
+        print(e.client!.nom);
         _markers.add(Marker(
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
           infoWindow: InfoWindow(
-            title: e.client!.nom.toString(),
+            title: e.client!.nom.toString()+e.client!.prenom.toString(),
+            snippet: e.facture?.montant.toString()
           ),
           markerId: MarkerId(e.id.toString()),
           position: LatLng(e.lat!, e.long!),
           onTap: () {
-           
           },
         ));
-      }}
+      }
     });
     return _markers;
   }
