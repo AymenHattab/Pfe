@@ -72,8 +72,7 @@ class CommercantApi {
   }
 
 //  Future<Set<Marker>>
-  Set<Marker> _markers = {};
-       
+  Set<Marker> _markers = {}; 
   markers(BuildContext context) {
     getcommande().then((value) {
       for (int i = 0; i < value[0].commande!.length; i++) {
