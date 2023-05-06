@@ -24,5 +24,10 @@ class CommercantLogged extends commercantEvents {
  CommercantLogged(this.context);
  List<Object?> get props =>[context];
 }
+class searchBydate extends commercantEvents {
+ String  date ; 
+ searchBydate(this.date);
+ List<Object?> get props =>[date];
+}
 
 

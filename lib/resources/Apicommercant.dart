@@ -27,7 +27,6 @@ class CommercantApi {
       print(res.statusCode);
       var data = json.decode(res.body);
       var list = clientModel.fromJson(data);
-
       posts.add(list);
       return posts;
     }

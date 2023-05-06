@@ -41,11 +41,11 @@ class mainview extends StatefulWidget {
 }
 
 class _MyAppState extends State<mainview> {
-    CommercantProfileBloc displayHistoric = CommercantProfileBloc(secondState());
+    // CommercantProfileBloc displayHistoric = CommercantProfileBloc(secondState());
   @override
   void initState() {
-      displayHistoric = BlocProvider.of<CommercantProfileBloc>(context);
-    displayHistoric.add(CommercantLogged(context));
+      // displayHistoric = BlocProvider.of<CommercantProfileBloc>(context);
+      // displayHistoric.add(CommercantLogged(context));
     // TODO: implement initState
     super.initState();
   }
@@ -167,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 iconSize: 30,
               ),
-              icon[i]
+              notification(),
             ],
           ),
         ]),

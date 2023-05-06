@@ -1,3 +1,4 @@
+import 'package:app/bloc/verification/verficationState.dart';
 import 'package:app/model/PanierModel.dart';
 import 'package:bloc/bloc.dart';
 
@@ -47,8 +48,11 @@ class BaskecontenttBloc extends Bloc<BasketEvent, BasketState> {
       try {
         print("passcommande bloc is done ");
         print(event.montant);
-        api.Createcommande(event.id, list, event.lat, event.long,
+        var test =  api.Createcommande(event.id, list, event.lat, event.long,
             event.clientId, event.montant);
+           test.then((value){
+              print(value);
+           });
         list.clear();
         somme = 0;
         emit(BasketcontentList(list, 0));

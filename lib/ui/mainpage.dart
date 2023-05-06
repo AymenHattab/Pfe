@@ -15,6 +15,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import '../bloc/CommercantBloc/commercantEvents.dart';
 import '../bloc/CommercantBloc/commercantState.dart';
 import '../bloc/CommercantBloc/commercantbloc.dart';
+import '../component/calendar.dart';
 import '../component/datamainc.dart';
 import '../model/modelTest.dart';
 
@@ -34,11 +35,17 @@ class _mainpageState extends State<mainpage> {
   Set<Marker> _markers = {};
   CommercantProfileBloc displayHistoric = CommercantProfileBloc(secondState());
   void initState() {
-    // displayHistoric = BlocProvider.of<CommercantProfileBloc>(context);
-    // displayHistoric.add(CommercantLogged(context));
-
+    displayHistoric = BlocProvider.of<CommercantProfileBloc>(context);
+    displayHistoric.add(CommercantLogged(context));
     super.initState();
   }
+
+  void dispose(){
+    MapController.dispose();
+    //...
+    super.dispose();
+    //...
+}
 
   montant() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -135,97 +142,101 @@ void _livelocation(){
                             duration: Duration(seconds: 1),
                             height: menudrag ? 250 : 0,
                             curve: Curves.decelerate,
-                            child: ListView.builder(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                itemCount: state.commande[0].commande!.length,
-                                itemBuilder: (context, index) {
-                                  var name = state
-                                      .commande[0].commande![index].client!.nom
-                                      .toString();
-                                  var id =
-                                      state.commande[0].commande![index].id;
-                                  var lastname = state.commande[0]
-                                      .commande![index].client!.prenom
-                                      .toString();
-                                  var date = state.commande[0].commande![index]
-                                      .facture?.date
-                                      .toString();
-                                  var montant = state.commande[0]
-                                      .commande![index].facture?.montant
-                                      .toString();
-                                  if (date == null) {
-                                    date = "";
-                                  }
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          return RealFacture(
-                                            id: id!,
-                                          );
-                                        },
-                                      ));
-                                    },
-                                    onDoubleTap: () {
-                                      setState(() {
-                                        menudrag = false;
-                                      });
-                                      final MarkerId targetMarkerId =
-                                          MarkerId(id.toString());
-                                      final Marker targetMarker =
-                                          _markers.firstWhere((marker) =>
-                                              marker.markerId ==
-                                              targetMarkerId);
-                                      print("target is not null ");
-                                      if (targetMarker != null) {
-                                        MapController.animateCamera(
-                                            CameraUpdate.newCameraPosition(
-                                                CameraPosition(
-                                                    target:
-                                                        targetMarker.position,
-                                                    zoom: 15,
-                                                    tilt: 50.0,
-                                                    bearing: 45.0)));
-                                      }
-                                    },
-                                    child: Container(
-                                      height: 50,
-                                      width: 100,
-                                      color: Colors.white10,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "$name  $lastname",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15,
-                                                fontFamily: "lexend"),
-                                          ),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                date,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 15,
-                                                    fontFamily: "lexend"),
-                                              ),
-                                              Text(
-                                                montant.toString(),
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 15,
-                                                    fontFamily: "lexend"),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                            child: PageView(
+                              children: [
+                                Calendar(),
+                                ListView.builder(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  itemCount: state.commande[0].commande!.length,
+                                  itemBuilder: (context, index) {
+                                    var name = state
+                                        .commande[0].commande![index].client!.nom
+                                        .toString();
+                                    var id =
+                                        state.commande[0].commande![index].id;
+                                    var lastname = state.commande[0]
+                                        .commande![index].client!.prenom
+                                        .toString();
+                                    var date = state.commande[0].commande![index]
+                                        .facture?.date
+                                        .toString();
+                                    var montant = state.commande[0]
+                                        .commande![index].facture?.montant
+                                        .toString();
+                                    if (date == null) {
+                                      date = "";
+                                    }
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context, MaterialPageRoute(
+                                          builder: (context) {
+                                            return RealFacture(
+                                              id: id!,
+                                            );
+                                          },
+                                        ));
+                                      },
+                                      onDoubleTap: () {
+                                        setState(() {
+                                          menudrag = false;
+                                        });
+                                        final MarkerId targetMarkerId =
+                                            MarkerId(id.toString());
+                                        final Marker targetMarker =
+                                            _markers.firstWhere((marker) =>
+                                                marker.markerId ==
+                                                targetMarkerId);
+                                        print("target is not null ");
+                                        if (targetMarker != null) {
+                                          MapController.animateCamera(
+                                              CameraUpdate.newCameraPosition(
+                                                  CameraPosition(
+                                                      target:
+                                                          targetMarker.position,
+                                                      zoom: 15,
+                                                      tilt: 50.0,
+                                                      bearing: 45.0)));
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        width: 100,
+                                        color: Colors.white10,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "$name  $lastname",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 15,
+                                                  fontFamily: "lexend"),
+                                            ),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  date,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15,
+                                                      fontFamily: "lexend"),
+                                                ),
+                                                Text(
+                                                  montant.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15,
+                                                      fontFamily: "lexend"),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }),
+                                    );
+                                  }),
+                        ]),
                           )
                         ],
                       );
