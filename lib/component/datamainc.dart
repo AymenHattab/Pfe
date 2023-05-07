@@ -21,9 +21,7 @@ class data extends StatelessWidget {
                 fontSize: 48,
                 color: Colors.white,
                 fontWeight: FontWeight.bold)),
-        Text("0%",
-            style: TextStyle(
-                fontFamily: 'Lexend', fontSize: 10, color: Colors.white)),
+
      
       ]),
     );

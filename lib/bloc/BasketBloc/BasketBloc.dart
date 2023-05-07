@@ -50,12 +50,18 @@ class BaskecontenttBloc extends Bloc<BasketEvent, BasketState> {
         print(event.montant);
         var test =  api.Createcommande(event.id, list, event.lat, event.long,
             event.clientId, event.montant);
-           test.then((value){
+            test.then((value){
               print(value);
            });
+           if (test!="operation effectue avec succesoperation effectue avec succes"){
+            test.then((value){
+              BasketMessage(value);
+           });
+           }else {
         list.clear();
         somme = 0;
         emit(BasketcontentList(list, 0));
+           }
       } catch (error) {
         throw UnimplementedError();
       }

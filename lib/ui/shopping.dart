@@ -68,7 +68,16 @@ Facturedraggable draggable = Facturedraggable();
               mainAxisAlignment: MainAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                clientsSidebar(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(onPressed: (){
+                      Navigator.pop(context);
+                    }, icon: Icon(Icons.arrow_back_ios_new_rounded , color: Color.fromRGBO(0, 85, 255, 1),)),
+                    clientsSidebar(),
+                    SizedBox(width: 12,)
+                  ],
+                ),
                SizedBox(height: 20,),
                 searchbar(
                   background: Color.fromARGB(0, 244, 67, 54),

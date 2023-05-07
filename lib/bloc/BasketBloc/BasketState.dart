@@ -26,6 +26,11 @@ class BasketcontentList extends BasketState {
   BasketcontentList (this.ListPanier,this.somme);
   List<Object?> get props => [ListPanier,somme];
 }
+class BasketMessage extends BasketState {
+  String msg ;
+  BasketMessage (this.msg);
+  List<Object?> get props => [msg];
+}
 
 class BasketErromsg extends BasketState {
   String msg;

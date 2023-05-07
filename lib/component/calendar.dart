@@ -8,7 +8,8 @@ import '../bloc/CommercantBloc/commercantState.dart';
 import '../bloc/CommercantBloc/commercantbloc.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+  final PageController controller ;
+   Calendar({super.key, required this.controller});
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -54,7 +55,9 @@ class _CalendarState extends State<Calendar> {
                 lastDay: DateTime(2030, 3, 14),
                 focusedDay: today,
                 onDaySelected: (selectedDay, focusedDay) {
+
                   searchbydate.add(searchBydate(selectedDay.toString()));
+                  widget.controller.nextPage(duration: Duration(seconds: 1), curve: Curves.ease);
                 },
               ),
             ),
