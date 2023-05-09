@@ -54,9 +54,9 @@ class BaskecontenttBloc extends Bloc<BasketEvent, BasketState> {
               print(value);
            });
            if (test!="operation effectue avec succesoperation effectue avec succes"){
-            test.then((value){
-              BasketMessage(value);
-           });
+            
+              BasketMessage("error");
+           
            }else {
         list.clear();
         somme = 0;

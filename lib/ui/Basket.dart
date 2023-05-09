@@ -78,10 +78,11 @@ class _BasketState extends State<Basket> {
       },
       child: BlocListener<BaskecontenttBloc,BasketState>(
         listener: (context, state) {
+          print("state basket =$state");
         if (state is BasketMessage) {
           _showMyDialog(state.msg);
         }else {
-          Navigator.pop(context);
+          // Navigator.pop(context);
         }
       },
         child: Material(

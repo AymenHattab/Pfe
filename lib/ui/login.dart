@@ -97,12 +97,9 @@ class _loginState extends State<login> {
                 // ),
                 MultiBlocListener(
                   listeners:[ BlocListener<CommercantProfileBloc,commercantState>(listener:(context, state) {
+                    print(state);
                     if (state is CommercantLoginMessage ){
                       print(state.msg);
-                      if (state.msg == "accepted"){
-                        print(state.msg);
-                        Navigator.pushNamed(context, "/mainview");}
-                  else{
                         setState(() {
                            testText= Text("email ou motdepasse et incorrect ",
                         style : TextStyle(
@@ -117,13 +114,13 @@ class _loginState extends State<login> {
                         
                       }  
                     
-                  }},
+                  },
                 
                    ),
               ], child: Container(),),
               testText,
                 mybutton(
-                    Ontap:()=> bloc.add(CommercantLogin(username.text,password.text)),
+                    Ontap:()=> bloc.add(CommercantLogin(username.text,password.text,context)),
                     text: "login",
                     size: ((MediaQuery.of(context).size.width / 1.5) - 15)),
                 Align(

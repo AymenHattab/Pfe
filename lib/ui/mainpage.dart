@@ -46,8 +46,8 @@ class _mainpageState extends State<mainpage> {
     super.dispose();
     //...
   }
-final PageController pageController =
-                    PageController(initialPage: 1);
+
+  final PageController pageController = PageController(initialPage: 1);
   montant() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var test = await prefs.getString('montant') ?? "0DT";
@@ -111,152 +111,165 @@ final PageController pageController =
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Flexible(
-              child: map(
-            callback: onMapCreated,
-          )),
-          GestureDetector(
-            onTap: () {
-              if (menudrag == false) {
-                setState(() {
-                  menudrag = true;
-                });
-              } else {
-                setState(() {
-                  menudrag = false;
-                });
-              }
-            },
-            child: AnimatedContainer(
-              clipBehavior: Clip.none,
-              duration: Duration(seconds: 1),
-              curve: Curves.decelerate,
-              // ignore: sort_child_properties_last
-              child: Column(
-                children: [
-                  BlocBuilder<CommercantProfileBloc, commercantState>(
-                    builder: (context, state) {
-                      print("state $state");
-                      if (state is Commercant) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            data(
-                                montant: state.commercant[0].montantActuelle
-                                    .toString()),
-                            AnimatedContainer(
-                              duration: Duration(seconds: 1),
-                              height: menudrag ? 250 : 0,
-                              curve: Curves.decelerate,
-                              child: Expanded(
-                                child: Container(
-                                  height: 230,
-                                  child: PageView(
-                                      controller: pageController,
-                                      children: [
-                                        Calendar(controller:pageController ),
-                                        ListView.builder(
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
-                                            itemCount: state
-                                                .commande[0].commande!.length,
-                                            itemBuilder: (context, index) {
-                                              var name = state.commande[0]
-                                                  .commande![index].client!.nom
-                                                  .toString();
-                                              var id = state.commande[0]
-                                                  .commande![index].id;
-                                              var lastname = state
-                                                  .commande[0]
-                                                  .commande![index]
-                                                  .client!
-                                                  .prenom
-                                                  .toString();
-                                              var date = state
-                                                  .commande[0]
-                                                  .commande![index]
-                                                  .facture
-                                                  ?.date
-                                                  .toString();
-                                              var montant = state
-                                                  .commande[0]
-                                                  .commande![index]
-                                                  .facture
-                                                  ?.montant
-                                                  .toString();
-                                              if (date == null) {
-                                                date = "";
-                                              }
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return RealFacture(
-                                                        id: id!,
-                                                      );
-                                                    },
-                                                  ));
-                                                },
-                                                onDoubleTap: () {
-                                                  setState(() {
-                                                    menudrag = false;
-                                                  });
-                                                  final MarkerId
-                                                      targetMarkerId =
-                                                      MarkerId(id.toString());
-                                                  final Marker targetMarker =
-                                                      _markers.firstWhere(
-                                                          (marker) =>
-                                                              marker.markerId ==
-                                                              targetMarkerId);
-                                                  print("target is not null ");
-                                                  if (targetMarker != null) {
-                                                    MapController.animateCamera(
-                                                        CameraUpdate.newCameraPosition(
-                                                            CameraPosition(
-                                                                target:
-                                                                    targetMarker
-                                                                        .position,
-                                                                zoom: 15,
-                                                                tilt: 50.0,
-                                                                bearing:
-                                                                    45.0)));
-                                                  }
-                                                },
-                                                child: Container(
-                                                  height: 50,
-                                                  width: 100,
-                                                  color: Colors.white10,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        "$name  $lastname",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 15,
-                                                            fontFamily:
-                                                                "lexend"),
-                                                      ),
-                                                      Column(
+    return
+       
+       Scaffold(
+        body: Stack(
+          children: [
+            Flexible(
+                child: map(
+              callback: onMapCreated,
+            )),
+            GestureDetector(
+              onTap: () {
+                if (menudrag == false) {
+                  setState(() {
+                    menudrag = true;
+                  });
+                } else {
+                  setState(() {
+                    menudrag = false;
+                  });
+                }
+              },
+              child: AnimatedContainer(
+                clipBehavior: Clip.none,
+                duration: Duration(seconds: 1),
+                curve: Curves.decelerate,
+                // ignore: sort_child_properties_last
+                child: Column(
+                  children: [
+                    BlocBuilder<CommercantProfileBloc, commercantState>(
+                      builder: (context, state) {
+                        print("state $state");
+                        if (state is Commercant) {
+                          print("inside BlocBuilder<CommercantProfileBloc, commercantState>( ");
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              data(
+                                  montant: state.commercant[0].montantActuelle
+                                      .toString()),
+                              AnimatedContainer(
+                                duration: Duration(seconds: 1),
+                                height: menudrag ? 250 : 0,
+                                curve: Curves.decelerate,
+                                child: Expanded(
+                                  child: Container(
+                                    height: 230,
+                                    child: PageView(
+                                        controller: pageController,
+                                        children: [
+                                          Calendar(controller: pageController),
+                                          ListView.builder(
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              itemCount: state
+                                                  .commande[0].commande!.length,
+                                              itemBuilder: (context, index) {
+                                                var name = state.commande[0]
+                                                    .commande![index].client!.nom
+                                                    .toString();
+                                                var id = state.commande[0]
+                                                    .commande![index].id;
+                                                var lastname = state
+                                                    .commande[0]
+                                                    .commande![index]
+                                                    .client!
+                                                    .prenom
+                                                    .toString();
+                                                var date = state
+                                                    .commande[0]
+                                                    .commande![index]
+                                                    .facture
+                                                    ?.date
+                                                    .toString();
+                                                DateTime dateTime =
+                                                    DateTime.parse(date.toString());
+                                                String outputDateString =
+                                                    "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+    
+                                                var montant = state
+                                                    .commande[0]
+                                                    .commande![index]
+                                                    .facture
+                                                    ?.montant
+                                                    .toString();
+                                                if (date == null) {
+                                                  date = "";
+                                                }
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(
+                                                      builder: (context) {
+                                                        return RealFacture(
+                                                          id: id!,
+                                                        );
+                                                      },
+                                                    ));
+                                                  },
+                                                  onDoubleTap: () {
+                                                    setState(() {
+                                                      menudrag = false;
+                                                    });
+                                                    final MarkerId
+                                                        targetMarkerId =
+                                                        MarkerId(id.toString());
+                                                    final Marker targetMarker =
+                                                        _markers.firstWhere(
+                                                            (marker) =>
+                                                                marker.markerId ==
+                                                                targetMarkerId);
+                                                    print("target is not null ");
+                                                    if (targetMarker != null) {
+                                                      MapController.animateCamera(
+                                                          CameraUpdate.newCameraPosition(
+                                                              CameraPosition(
+                                                                  target:
+                                                                      targetMarker
+                                                                          .position,
+                                                                  zoom: 15,
+                                                                  tilt: 50.0,
+                                                                  bearing:
+                                                                      45.0)));
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: 100,
+                                                    color: Colors.white10,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
-                                                          Text(
-                                                            date,
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 15,
-                                                                fontFamily:
-                                                                    "lexend"),
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                "$name  $lastname",
+                                                                style: TextStyle(
+                                                                    color: Colors.white,
+                                                                    fontSize: 15,
+                                                                    fontFamily:
+                                                                        "lexend"),
+                                                              ),
+                                                               Text(
+                                                                " $montant DT ",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize: 15,
+                                                                    fontFamily:
+                                                                        "lexend"),
+                                                              ),
+                                                            ],
                                                           ),
                                                           Text(
-                                                            montant.toString(),
+                                                            outputDateString,
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white,
@@ -266,83 +279,83 @@ final PageController pageController =
                                                           ),
                                                         ],
                                                       ),
-                                                    ],
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                                            }),
-                                      ]),
+                                                );
+                                              }),
+                                        ]),
+                                  ),
                                 ),
-                              ),
-                            )
-                          ],
-                        );
-                      }
-                      return Container(child: const Text("test"));
-                    },
-                  ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                pageController.previousPage(
-                                    duration: Duration(seconds: 1),
-                                    curve: Curves.linear);
-                              },
-                              icon: Icon(
-                                Icons.calendar_month,
-                                color: Colors.white,
-                              )),
-                          IconButton(
-                              onPressed: () {
-                                displayHistoric.add(CommercantLogged(context));
-                                pageController.nextPage(
-                                    duration: Duration(seconds: 1),
-                                    curve: Curves.linear);
-                              },
-                              icon: Icon(
-                                Icons.align_horizontal_left_rounded,
-                                color: Colors.white,
-                              )),
-                          IconButton(
-                              onPressed: () {
-                                _getLocation();
-                              },
-                              icon: const Icon(
-                                Icons.location_history_sharp,
-                                color: Colors.white,
-                                size: 25,
-                              )),
-                        ],
-                      ),
+                              )
+                            ],
+                          );
+                        }
+                        return Container(child: CircularProgressIndicator(color: Colors.white,));
+                      },
                     ),
-                  )
-                ],
-              ),
-              height: menudrag ? 400 : 150,
-              width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(50),
-                    bottomRight: Radius.circular(50)),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [0.3, 1],
-                  colors: [
-                    Color.fromRGBO(8, 115, 209, 1),
-                    Color.fromRGBO(0, 95, 236, 1),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  pageController.previousPage(
+                                      duration: Duration(seconds: 1),
+                                      curve: Curves.linear);
+                                },
+                                icon: Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.white,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  displayHistoric.add(CommercantLogged(context));
+                                  pageController.nextPage(
+                                      duration: Duration(seconds: 1),
+                                      curve: Curves.linear);
+                                },
+                                icon: Icon(
+                                  Icons.align_horizontal_left_rounded,
+                                  color: Colors.white,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  _getLocation();
+                                },
+                                icon: const Icon(
+                                  Icons.location_history_sharp,
+                                  color: Colors.white,
+                                  size: 25,
+                                )),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
+                ),
+                height: menudrag ? 400 : 150,
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(50),
+                      bottomRight: Radius.circular(50)),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.3, 1],
+                    colors: [
+                      Color.fromRGBO(8, 115, 209, 1),
+                      Color.fromRGBO(0, 95, 236, 1),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    
   }
 }

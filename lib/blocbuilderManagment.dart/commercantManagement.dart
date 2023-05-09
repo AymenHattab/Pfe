@@ -15,6 +15,7 @@ class commercantManagement {
    final Name = BlocBuilder<CommercantProfileBloc, commercantState>(
       builder: (context, state) {
     if (state is Commercant){
+      print("commercant state ==$state");
     String name=state.commercant[0].nom.toString();
     String lastname=state.commercant[0].prenom.toString();
       return Text("$name $lastname",

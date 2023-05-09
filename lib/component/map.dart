@@ -152,9 +152,9 @@ listener:(context, state) {
         children:[ 
           
           GoogleMap(
-            onCameraMove : (LatLng){
-                  print(LatLng);
-            },
+            // onCameraMove : (LatLng){
+            //       print(LatLng);
+            // },
             mapType: MapType.normal,
 
             myLocationButtonEnabled : false ,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'blocbuilderManagment.dart/commercantManagement.dart';
 
 class mydrawer extends StatefulWidget {
   const mydrawer({super.key});
@@ -7,6 +10,8 @@ class mydrawer extends StatefulWidget {
   State<mydrawer> createState() => _mydrawerState();
 }
 
+
+commercantManagement cm =commercantManagement();
 class _mydrawerState extends State<mydrawer> {
   @override
   Widget build(BuildContext context) {
@@ -14,66 +19,42 @@ class _mydrawerState extends State<mydrawer> {
       child: ListView(
         children: [
           DrawerHeader(
-              child: CircleAvatar(
-            backgroundImage: null,
-           
-          )),
+              child: cm.Image),
           ListTile(
-            title: Text("login"),
+            title: Row(
+              children: [
+                Icon(Icons.settings_applications_rounded) , 
+                Text("modifier profile"),
+              ],
+            ),
             onTap: () {
               Navigator.pushNamed(context, "/login");
-            },
-          ),
+            },),
           ListTile(
-            title: Text("main page "),
-            onTap: () {
-              Navigator.pushNamed(context, "/mainpage");
-            },
-          ),
+            title: Row(
+              children: [
+                Icon(Icons.info) , 
+                Text("Guide"),
+              ],
+            ),
+            onTap: () async {
+             
+            
+            },),
           ListTile(
-            title: Text("shopp "),
-            onTap: () {
-              Navigator.pushNamed(context, "/shop");
-            },
-          ),
-          ListTile(
-            title: Text("signup "),
-            onTap: () {
+            title: Row(
+              children: [
+                Icon(Icons.logout_outlined) , 
+                Text("Logout"),
+              ],
+            ),
+            onTap: ()async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+
+            prefs.remove('Idcommercant');
               Navigator.pushNamed(context, "/signupAndLogin");
-            },
-          ),
-          ListTile(
-            title: Text("sign "),
-            onTap: () {
-              Navigator.pushNamed(context, "/signup");
-            },
-          ),
-          ListTile(
-            title: Text("profile "),
-            onTap: () {
-              Navigator.pushNamed(context, "/profile");
-            },
-          ),
-          ListTile(
-            title: Text("facture"),
-            onTap: () {
-              Navigator.pushNamed(context, "/facture");
-              
-            },
-          ),
-          ListTile(
-            title: Text("apitest"),
-            onTap: () {
-              Navigator.pushNamed(context, "/apitest");
-              
-            },
-          ),
-          ListTile(
-            title: Text("test"),
-            onTap: () {
-              Navigator.pushNamed(context, "/test");
-            },
-          )
+            },)
+      
         ],
       ),
     );

@@ -49,11 +49,11 @@ class Produit {
     id = json['id'];
     nom = json['nom'];
     description = json['description'];
-    prix = json['prix'];
+    prix = json['prix'].toInt();
     color = json['color'];
     image = json['image'];
-    pht = json['pht'];
-    pat = json['pat'];
+    pht = json['pht'].toInt();
+    pat = json['pat'].toInt();
     remise = json['remise'];
     idcategory = json['idcategory'];
   }

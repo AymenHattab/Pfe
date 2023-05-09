@@ -53,6 +53,20 @@ class _MyAppState extends State<mainview> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        routes: {
+          "/facture": (context) => facture(lat: 0.0,long: 0.0),
+          "/signupAndLogin": (context) => signupAndLogin(),
+          "/login": (context) => login(),
+          "/mainpage": (context) => mainpage(),
+          "/shop": (context) => shopping(),
+          // "/signup": (context) => signup(),
+          "/profile": (context) => profile(),
+          "/apitest": (context) => PullToViewPage(),
+          "/test": (context) => MyHomePagetest(),
+          "/basket": (context) => Basket(state : false , lat: 0.0,long: 0.0,),
+         
+          "/mainview": (context) => mainview(),
+        },
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,

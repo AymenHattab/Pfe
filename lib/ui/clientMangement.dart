@@ -75,7 +75,6 @@ class _clientsSidebarState extends State<clientsSidebar> {
                  Icon(Icons.person_add_alt, size: 20,color: Color.fromRGBO(255, 255, 255, 1),),
                  SizedBox(width: 10,),
                       Text("$name  ",style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1),fontSize: 15,fontWeight : FontWeight.w300,),
-                      
                       ),
                      
                 ],
