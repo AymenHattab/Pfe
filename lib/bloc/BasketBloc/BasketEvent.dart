@@ -13,7 +13,7 @@ class NumberOfBasket extends BasketEvent {}
 
 class AddListToBasket extends BasketEvent {
   panier Panier;
-  int somme ; 
+  double somme ; 
   AddListToBasket(this.Panier,this.somme);
   List<Object?> get props => [Panier,somme];
 }
@@ -29,7 +29,7 @@ class Passcommand extends BasketEvent {
   double lat;
   double long;
   int clientId;
-  String montant ; 
+  double montant ; 
   Passcommand(this.id,  this.lat, this.long, this.clientId , this.montant);
 }
 

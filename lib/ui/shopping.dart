@@ -151,7 +151,7 @@ Facturedraggable draggable = Facturedraggable();
                           child: containerproduct(
                             idProduct  : state.pr[index].produit![index].id!,
                               image: state.pr[index].produit![index].image!,
-                              prize: state.pr[index].produit![index].prix!,
+                              prize: state.pr[index].produit![index].prix!.toDouble(),
                               color: state.pr[index].produit![index].color!,
                               onAddToCart: (newCart) {
                                 setState(() {

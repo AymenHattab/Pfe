@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class panier {
   final int id;
-  final int prix;
+  final double prix;
   final String image;
   final String nom;
   final int qte;

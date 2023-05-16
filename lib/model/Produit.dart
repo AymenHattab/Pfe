@@ -25,11 +25,11 @@ class Produit {
   int? id;
   String? nom;
   String? description;
-  int? prix;
+  double? prix;
   String? color;
   String? image;
-  int? pht;
-  int? pat;
+  double? pht;
+  double? pat;
   int? remise;
   int? idcategory;
 
@@ -49,12 +49,12 @@ class Produit {
     id = json['id'];
     nom = json['nom'];
     description = json['description'];
-    prix = json['prix'].toInt();
+    prix = json['prix'];
     color = json['color'];
     image = json['image'];
-    pht = json['pht'].toInt();
-    pat = json['pat'].toInt();
-    remise = json['remise'];
+    pht = json['pht'];
+    pat = json['pat'];
+    
     idcategory = json['idcategory'];
   }
 

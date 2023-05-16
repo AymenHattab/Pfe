@@ -14,14 +14,15 @@ import 'clientMangement.dart';
 
 final List<panier> Panier = [];
 
-String somme = "0";
+double somme = 0;
 
 class Basket extends StatefulWidget {
+  int  idclient;
   double lat;
   double long;
   bool state;
   Basket(
-      {super.key, required this.state, required this.lat, required this.long});
+      {super.key, required this.state, required this.lat, required this.idclient, required this.long});
   @override
   State<Basket> createState() => _BasketState();
 }
@@ -45,8 +46,8 @@ class _BasketState extends State<Basket> {
         content: SingleChildScrollView(
           child: ListBody(
             children: const <Widget>[
-              Text('This is a demo alert dialog.'),
-              Text('Would you like to approve of this message?'),
+              Text('error.'),
+              Text('il y a un error il peut etre ..3?'),
             ],
           ),
         ),
@@ -81,8 +82,9 @@ class _BasketState extends State<Basket> {
           print("state basket =$state");
         if (state is BasketMessage) {
           _showMyDialog(state.msg);
-        }else {
-          // Navigator.pop(context);
+        }if (state is BasketcontentList) {
+          
+           Navigator.pop(context);
         }
       },
         child: Material(
@@ -169,7 +171,7 @@ class _BasketState extends State<Basket> {
                             BlocBuilder<BaskecontenttBloc, BasketState>(
                               builder: (context, state) {
                                 if (state is BasketcontentList) {
-                                  somme = state.somme.toString();
+                                  somme = state.somme;
                                   return Text(
                                     state.somme.toString(),
                                     style: TextStyle(
@@ -197,7 +199,7 @@ class _BasketState extends State<Basket> {
                           ),
                           onPressed: () {
                             print("on pressed button");
-                            print(somme);
+                            print("somme = $somme");
                             Numbercontent.add(
                                 Passcommand(id, widget.lat, widget.long, 2, somme));
                           },

@@ -9,8 +9,8 @@ class FactureModel {
   int? idCard;
   int? cliId;
   int? idliv;
-  Client? client;
   Card? card;
+  Client? client;
   Facture? facture;
 
   FactureModel(
@@ -24,8 +24,8 @@ class FactureModel {
       this.idCard,
       this.cliId,
       this.idliv,
-      this.client,
       this.card,
+      this.client,
       this.facture});
 
   FactureModel.fromJson(Map<String, dynamic> json) {
@@ -39,9 +39,9 @@ class FactureModel {
     idCard = json['idCard'];
     cliId = json['CliId'];
     idliv = json['idliv'];
+    card = json['Card'] != null ? new Card.fromJson(json['Card']) : null;
     client =
         json['Client'] != null ? new Client.fromJson(json['Client']) : null;
-    card = json['Card'] != null ? new Card.fromJson(json['Card']) : null;
     facture =
         json['facture'] != null ? new Facture.fromJson(json['facture']) : null;
   }
@@ -58,43 +58,15 @@ class FactureModel {
     data['idCard'] = this.idCard;
     data['CliId'] = this.cliId;
     data['idliv'] = this.idliv;
-    if (this.client != null) {
-      data['Client'] = this.client!.toJson();
-    }
     if (this.card != null) {
       data['Card'] = this.card!.toJson();
+    }
+    if (this.client != null) {
+      data['Client'] = this.client!.toJson();
     }
     if (this.facture != null) {
       data['facture'] = this.facture!.toJson();
     }
-    return data;
-  }
-}
-
-class Client {
-  int? id;
-  String? nom;
-  String? prenom;
-  String? phone;
-  int? idCom;
-
-  Client({this.id, this.nom, this.prenom, this.phone, this.idCom});
-
-  Client.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nom = json['nom'];
-    prenom = json['prenom'];
-    phone = json['phone'];
-    idCom = json['idCom'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nom'] = this.nom;
-    data['prenom'] = this.prenom;
-    data['phone'] = this.phone;
-    data['idCom'] = this.idCom;
     return data;
   }
 }
@@ -131,8 +103,15 @@ class CardItem {
   int? qteProduit;
   int? prix;
   int? idCard;
+  Produit? produit;
 
-  CardItem({this.id, this.idProduit, this.qteProduit, this.prix, this.idCard});
+  CardItem(
+      {this.id,
+      this.idProduit,
+      this.qteProduit,
+      this.prix,
+      this.idCard,
+      this.produit});
 
   CardItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -140,6 +119,8 @@ class CardItem {
     qteProduit = json['qte_produit'];
     prix = json['Prix'];
     idCard = json['idCard'];
+    produit =
+        json['Produit'] != null ? new Produit.fromJson(json['Produit']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -149,6 +130,90 @@ class CardItem {
     data['qte_produit'] = this.qteProduit;
     data['Prix'] = this.prix;
     data['idCard'] = this.idCard;
+    if (this.produit != null) {
+      data['Produit'] = this.produit!.toJson();
+    }
+    return data;
+  }
+}
+
+class Produit {
+  int? id;
+  String? nom;
+  String? description;
+  double? prix;
+  String? color;
+  String? image;
+  double? pht;
+  double? pat;
+  int? remise;
+  int? idcategory;
+
+  Produit(
+      {this.id,
+      this.nom,
+      this.description,
+      this.prix,
+      this.color,
+      this.image,
+      this.pht,
+      this.pat,
+      this.remise,
+      this.idcategory});
+
+  Produit.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nom = json['nom'];
+    description = json['description'];
+    prix = json['prix'];
+    color = json['color'];
+    image = json['image'];
+    pht = json['pht'];
+    pat = json['pat'];
+    remise = json['remise'];
+    idcategory = json['idcategory'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['nom'] = this.nom;
+    data['description'] = this.description;
+    data['prix'] = this.prix;
+    data['color'] = this.color;
+    data['image'] = this.image;
+    data['pht'] = this.pht;
+    data['pat'] = this.pat;
+    data['remise'] = this.remise;
+    data['idcategory'] = this.idcategory;
+    return data;
+  }
+}
+
+class Client {
+  int? id;
+  String? nom;
+  String? prenom;
+  String? phone;
+  int? idCom;
+
+  Client({this.id, this.nom, this.prenom, this.phone, this.idCom});
+
+  Client.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nom = json['nom'];
+    prenom = json['prenom'];
+    phone = json['phone'];
+    idCom = json['idCom'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['nom'] = this.nom;
+    data['prenom'] = this.prenom;
+    data['phone'] = this.phone;
+    data['idCom'] = this.idCom;
     return data;
   }
 }
@@ -156,7 +221,7 @@ class CardItem {
 class Facture {
   int? id;
   String? date;
-  int? montant;
+  double? montant;
   int? codeCmd;
 
   Facture({this.id, this.date, this.montant, this.codeCmd});
@@ -164,7 +229,7 @@ class Facture {
   Facture.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     date = json['date'];
-    montant = json['montant'];
+    montant = json['montant'].toDouble();
     codeCmd = json['code_cmd'];
   }
 

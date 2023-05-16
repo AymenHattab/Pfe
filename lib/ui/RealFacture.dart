@@ -9,8 +9,8 @@ import '../model/FactureModel.dart';
 import '../resources/produitApi.dart';
 
 class RealFacture extends StatefulWidget {
-  int id ;
-  RealFacture({ super.key, required this.id});
+  int id;
+  RealFacture({super.key, required this.id});
 
   @override
   State<RealFacture> createState() => _RealFactureState();
@@ -20,9 +20,9 @@ class _RealFactureState extends State<RealFacture> {
   BaskecontenttBloc Facturedisplay = BaskecontenttBloc();
   @override
   void initState() {
-   var Facturedisplay = BlocProvider.of<BaskecontenttBloc>(context);
-   Facturedisplay.add(FactureEvent(widget.id));
-  
+    var Facturedisplay = BlocProvider.of<BaskecontenttBloc>(context);
+    Facturedisplay.add(FactureEvent(widget.id));
+
     super.initState();
   }
 
@@ -43,7 +43,7 @@ class _RealFactureState extends State<RealFacture> {
     return Material(
       child: SafeArea(
         child: Container(
-          color: Colors.grey[200],
+          color: Colors.white10,
           child: BlocBuilder<BaskecontenttBloc, BasketState>(
             builder: (context, state) {
               if (state is FactureLoadedState) {
@@ -53,7 +53,10 @@ class _RealFactureState extends State<RealFacture> {
                   child: ListView.builder(
                     itemCount: state.Facture.length,
                     itemBuilder: (context, index) {
-                      DateTime dateTime = DateTime.parse(state.Facture[index].facture!.date!);
+                      DateTime dateTime =
+                          DateTime.parse(state.Facture[index].facture!.date!);
+                      String Total =
+                          state.Facture[index].facture!.montant.toString();
                       String outputDateString =
                           "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
 
@@ -63,8 +66,11 @@ class _RealFactureState extends State<RealFacture> {
                       var cartitem = state.Facture[index].card!.cardItem!;
                       return Column(
                         children: [
-                          IconButton(onPressed: (){Navigator.pop(context);
-    }, icon: Icon(Icons.arrow_back_ios_sharp)),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(Icons.arrow_back_ios_sharp)),
                           const Text(
                             "Facture",
                             style: TextStyle(
@@ -117,38 +123,52 @@ class _RealFactureState extends State<RealFacture> {
                             endIndent: 20,
                           ),
                           SizedBox(
-                            height: 100,
-                            child: ListView.builder(itemCount: state.Facture[index].card!.cardItem!.length ,itemBuilder:
-                            (context, index) {
-                              return Row(
-                                mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(cartitem[index].id.toString()),
-                                  Text(cartitem[index].prix.toString()),
-                                ],
-                              );
-                            }, ),
-
+                            height: 300,
+                            child: ListView.builder(
+                              itemCount:
+                                  state.Facture[index].card!.cardItem!.length,
+                              itemBuilder: (context, index) {
+                                String produit =cartitem[index].produit!.nom.toString();
+                                String qte =cartitem[index].qteProduit.toString();
+                                String prix =cartitem[index].produit!.prix.toString();
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "$produit ($qte)" , 
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(0, 85, 255, 1)),
+                                      ),
+                                      TextStyling("$prix dt"),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                            SizedBox(height: 100,),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextStyling("Totale"),
-                                  TextStyling(state.Facture[index].facture!.montant.toString()),
-                                ],
-                              ),
-                            )
+                          Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Text(
+                                "Total $Total Dt",
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(0, 85, 255, 1),
+                                    fontFamily: "Lexend",
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ))
                         ],
                       );
                     },
                   ),
                 );
               }
-              return Text("non");
+              return Text("error ");
             },
           ),
         ),

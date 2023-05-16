@@ -1,6 +1,9 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:math';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/FactureModel.dart';
 import '../model/PanierModel.dart';
@@ -14,6 +17,19 @@ class produitApi {
     Random random = Random();
     return random.nextInt(4000);
   }
+    getid()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? myValue = prefs.getInt('Idcommercant');
+    print("my value ==== $myValue");
+    return myValue;
+
+  }
+    getclientid()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? myValue = prefs.getString('idClient');
+    print("my value ==== $myValue");
+    return myValue;
+  }
 
   Future<String> Createcommande(
     String id ,
@@ -21,18 +37,20 @@ class produitApi {
     double lat , 
     double long ,
     int clientId ,  
-    String montant 
+    double montant 
   ) async {
     var randomnumber = RandomNumber();
     print(randomnumber);
+    String idClient =await getclientid();
 var msg="operation effectue avec succes";
-print(id);
-print(panier);
-print(lat);
-print(long);
-print(clientId);
+print("id $id");
+print(" panier $panier");
+print("lat $lat");
+print(" long $long");
+print("client id $clientId");
 print(montant);
-if (id== "" || panier==[] || lat=="" || long =="" || clientId=="" || montant==0 ){
+if (id== "" || panier==[] || lat=="" || long =="" || idClient=="" || montant==0 ){
+  print("empty form");
   msg="error" ; 
   return msg ; 
 }else {
@@ -54,7 +72,7 @@ if (id== "" || panier==[] || lat=="" || long =="" || clientId=="" || montant==0 
       );
       }
       if (response.statusCode!=201){
-        print(randomnumber);
+        print(" response201");
         return "il y a un probleme card "; 
       }
    
@@ -67,16 +85,20 @@ if (id== "" || panier==[] || lat=="" || long =="" || clientId=="" || montant==0 
         .post(uri2, body: {"idproduit":panier[i].id.toString(), "qte_produit":panier[i].qte.toString(), "Prix":panier[i].prix.toString(), "idcard":randomnumber.toString()});
         print(res.statusCode);
          if (res.statusCode!=201){
+           print(" uri2 201");
         return "il y a un probleme carditem "; 
       }
     }
 
 // // //     //add command 
+
+      int id = await getid() ; 
       final uri3 = Uri.parse("http://192.168.1.17:8000/api/commande");
     var res3 = await http.post(uri3, body: {
-      "idCard":randomnumber.toString(),"ComId" : "1","CliId" :id ,"lat" :lat.toString() ,"long" :long.toString() ,"id" :randomnumber.toString()
+      "idCard":randomnumber.toString(),"ComId" :id.toString() ,"CliId" :idClient,"lat" :lat.toString() ,"long" :long.toString() ,"id" :randomnumber.toString()
     });
      if (res3.statusCode!=201){
+       print(res3.body);
         return "il y a un probleme commande "; 
       }
 print(montant);
@@ -84,12 +106,14 @@ print(montant);
 
         final uri4 = Uri.parse("http://192.168.1.17:8000/api/facture");
     var res4 = await http.post(uri4, body: {
-      "montant" :montant, "code_cmd" :randomnumber.toString()
+      "montant" :montant.toString(), "code_cmd" :randomnumber.toString()
     });
      if (res4.statusCode!=200){
+      print("res4");
         return "il y a un probleme facture "; 
       }
 }
+print("msg = === $msg");
 return msg ; 
 
 
@@ -139,7 +163,7 @@ return msg ;
   Future<List<FactureModel>> getFacture(int id) async {
     print(id);
     List<FactureModel> posts = [];
-    final uri = Uri.parse("http://192.168.1.17:8000/api/client/commande/$id");
+    final uri = Uri.parse("http://192.168.1.17:8000/api/facture/$id");
     var res = await http.get(uri);
     print(" test $res");
     print(res.statusCode);

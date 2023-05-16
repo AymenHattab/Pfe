@@ -8,7 +8,7 @@ import 'BasketEvent.dart';
 import 'BasketState.dart';
 
 List<panier> list = [];
-int somme = 0;
+double somme = 0;
 produitApi api = produitApi();
 
 class BasketBloc extends Bloc<BasketEvent, BasketState> {
@@ -29,6 +29,7 @@ class BaskecontenttBloc extends Bloc<BasketEvent, BasketState> {
     on<FactureEvent>(((event, emit) async {
       try {
         Facture = await api.getFacture(event.id);
+        print(Facture);
         emit(FactureLoadedState(Facture));
       } catch (error) {
         throw UnimplementedError();
@@ -47,16 +48,12 @@ class BaskecontenttBloc extends Bloc<BasketEvent, BasketState> {
     on<Passcommand>(((event, emit) async {
       try {
         print("passcommande bloc is done ");
-        print(event.montant);
-        var test =  api.Createcommande(event.id, list, event.lat, event.long,
+       
+        var test =  await api.Createcommande(event.id, list, event.lat, event.long,
             event.clientId, event.montant);
-            test.then((value){
-              print(value);
-           });
-           if (test!="operation effectue avec succesoperation effectue avec succes"){
-            
-              BasketMessage("error");
-           
+            print("test msg =test");
+           if (test!="operation effectue avec succes"){
+              emit(BasketMessage("error"));
            }else {
         list.clear();
         somme = 0;
@@ -69,7 +66,7 @@ class BaskecontenttBloc extends Bloc<BasketEvent, BasketState> {
     on<AddListToBasket>(((event, emit) async {
       try {
         list.add(event.Panier);
-        somme = event.somme + somme;
+        somme = (event.somme*event.Panier.qte) + somme;
         emit(BasketcontentList(list, somme));
       } catch (error) {
         throw UnimplementedError();

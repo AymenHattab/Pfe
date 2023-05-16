@@ -236,7 +236,7 @@ class Facture {
   Facture.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     date = json['date'];
-    montant = json['montant'];
+    montant = json['montant'].toInt();
     codeCmd = json['code_cmd'];
   }
 

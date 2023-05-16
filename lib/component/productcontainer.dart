@@ -15,7 +15,7 @@ class containerproduct extends StatefulWidget {
   String Titre;
   String color;
   String image ; 
-  int prize ; 
+  double prize ; 
   
   containerproduct({Key? key,required this.idProduct, required this.Titre,required this.image,required this.prize,required this.color, required this.onAddToCart})
       : super(key: key);
